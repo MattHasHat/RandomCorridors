@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonScreen : MonoBehaviour {
-
+public class DungeonScreen : MonoBehaviour
+{
     public ScreenManager ScreenManager;
     public DungeonSpawner DungeonSpawner;
     public bool ChangeFloor = false;
 
-	void Update () {
+    void Update()
+    {
         if (ScreenManager.GetScreen() != ScreenState.DungeonScreen)
         {
             return;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuScreen : MonoBehaviour {
-
+public class MainMenuScreen : MonoBehaviour
+{
     public ScreenManager ScreenManager;
     public Texture2D Background;
 

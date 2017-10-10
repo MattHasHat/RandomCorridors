@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridLocation {
-
+public class GridLocation
+{
     public int x;
-    public int y;
+    public int z;
 
-    public GridLocation(int xLoc, int yLoc)
+    public GridLocation(int xLoc, int zLoc)
     {
         x = xLoc;
-        y = yLoc;
+        z = zLoc;
     }
 
     public override bool Equals(object obj)
@@ -18,7 +18,7 @@ public class GridLocation {
         if (obj is GridLocation)
         {
             GridLocation t = (GridLocation)obj;
-            if (t.x == x && t.y == y)
+            if (t.x == x && t.z == z)
             {
                 return true;
             }

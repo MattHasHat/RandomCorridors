@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Adventurer : MonoBehaviour {
-
+public class Adventurer : MonoBehaviour
+{
     public ScreenManager ScreenManager;
     private string adventurerName;
     private int totalExperience;
@@ -18,7 +18,7 @@ public class Adventurer : MonoBehaviour {
         currentHealth = maxHealth;
     }
 
-    private void OnGUI()
+    void OnGUI()
     {
         if (ScreenManager.GetScreen() != ScreenState.MainMenuScreen && ScreenManager.GetScreen() != ScreenState.DungeonScreen)
         {

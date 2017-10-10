@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
-
+public class CameraController : MonoBehaviour
+{
     public Camera AdventurerCamera;
     public float cameraZoomedInDistance;
     public float cameraZoomedOutDistance;
