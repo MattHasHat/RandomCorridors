@@ -53,79 +53,44 @@ public class DungeonSpawner : MonoBehaviour
 
     private TileSet[,] TileSetGrid;
 
-    Transform GetPrefabFromBuildingBlockType(TileSet tile)
+    Transform GetPrefabFromTileSet(TileSet tile)
     {
         switch (tile)
         {
-
             case TileSet.Empty:
-
                 return PrefabBuildingBlock_Empty;
-
             case TileSet.EndNorth:
-
                 return PrefabBuildingBlock_EndNorth;
-
             case TileSet.EndEast:
-
                 return PrefabBuildingBlock_EndEast;
-
             case TileSet.EndSouth:
-
                 return PrefabBuildingBlock_EndSouth;
-
             case TileSet.EndWest:
-
                 return PrefabBuildingBlock_EndWest;
-
             case TileSet.NorthEast:
-
                 return PrefabBuildingBlock_NorthEast;
-
             case TileSet.NorthSouth:
-
                 return PrefabBuildingBlock_NorthSouth;
-
             case TileSet.NorthWest:
-
                 return PrefabBuildingBlock_NorthWest;
-
             case TileSet.EastSouth:
-
                 return PrefabBuildingBlock_EastSouth;
-
             case TileSet.EastWest:
-
                 return PrefabBuildingBlock_EastWest;
-
             case TileSet.SouthWest:
-
                 return PrefabBuildingBlock_SouthWest;
-
             case TileSet.NoNorth:
-
                 return PrefabBuildingBlock_NoNorth;
-
             case TileSet.NoEast:
-
                 return PrefabBuildingBlock_NoEast;
-
             case TileSet.NoSouth:
-
                 return PrefabBuildingBlock_NoSouth;
-
             case TileSet.NoWest:
-
                 return PrefabBuildingBlock_NoWest;
-
             case TileSet.All:
-
                 return PrefabBuildingBlock_All;
-
             default:
-
                 return PrefabBuildingBlock_Empty;
-
         }
     }
 
@@ -133,6 +98,45 @@ public class DungeonSpawner : MonoBehaviour
     {
         ArrayList allTiles = GetListOfAllTiles();
         return (TileSet)allTiles[Random.Range(0, allTiles.Count)];
+    }
+
+    void InstantiateDungeonBuildingBlocksFromGrid()
+    {
+        prefabBuildingBlockWidth = PrefabBuildingBlock_All.localScale.x;
+        prefabBuildingBlockHeight = PrefabBuildingBlock_All.localScale.z;
+
+        for (int i = 0; i < NumBuildingBlocksAcross; ++i)
+        {
+            for (int j = 0; j < NumBuildingBlocksUp; ++j)
+            {
+                if (TileSetGrid[i, j] != TileSet.None)
+                {
+                    float instantiateXPosition = transform.position.x + (i * prefabBuildingBlockWidth);
+                    float instantiateZPosition = transform.position.z + (j * prefabBuildingBlockHeight);
+                    Transform prefabToMake = GetPrefabFromTileSet(TileSetGrid[i, j]);
+                    Transform createBlock = (Transform)Instantiate(prefabToMake, new Vector3(instantiateXPosition, 0.0f, instantiateZPosition), Quaternion.identity);
+
+                    if (MaterialOverrideStairsUp != null && i == stairsUpLocation.x && j == stairsUpLocation.z)
+                    {
+                        for (int childIndex = 0; childIndex < createBlock.childCount; ++childIndex)
+                        {
+                            Transform child = createBlock.GetChild(childIndex);
+                            child.renderer.material = MaterialOverrideStairsUp;
+                        }
+                    }
+                    else if (MaterialOverrideStairsDown != null && i == stairsDownLocation.x && j == stairsDownLocation.z)
+                    {
+                        for (int childIndex = 0; childIndex < createBlock.childCount; ++childIndex)
+                        {
+                            Transform child = createBlock.GetChild(childIndex);
+                            child.renderer.material = MaterialOverrideStairsDown;
+                        }
+                    }
+
+                    createBlock.parent = PrefabBuildingBlockParent;
+                }
+            }
+        }
     }
 
     ArrayList GetListOfAllTiles()
@@ -347,19 +351,12 @@ public class DungeonSpawner : MonoBehaviour
     TileSet ChooseValidBuildingBlockType(GridLocation location)
     {
         bool hasWest = false;
-
         bool hasNorth = false;
-
         bool hasEast = false;
-
         bool hasSouth = false;
-
         bool noWest = false;
-
         bool noNorth = false;
-
         bool noEast = false;
-
         bool noSouth = false;
 
         if (location.x > 0 && TileSetGrid[location.x - 1, location.z] != TileSet.Empty)
@@ -580,14 +577,213 @@ public class DungeonSpawner : MonoBehaviour
         CapOffDeadEnds();
     }
 
+    ArrayList GetPotentialStairPositions()
+    {
+        ArrayList returnList = new ArrayList();
+
+        for (int i = 0; i < NumBuildingBlocksAcross; ++i)
+        {
+            for (int j = 0; j < NumBuildingBlocksUp; ++j)
+            {
+                if (TileSetGrid[i, j] != TileSet.Empty)
+                {
+                    returnList.Add(new GridLocation(i, j));
+                }
+            }
+        }
+
+        return returnList;
+    }
+
+    ArrayList GetPotentialStairPositionsInRow(int row)
+    {
+        ArrayList returnList = new ArrayList();
+
+        for (int i = 0; i < NumBuildingBlocksAcross; ++i)
+        {
+            if (TileSetGrid[i, row] != TileSet.Empty)
+            {
+                returnList.Add(new GridLocation(i, row));
+            }
+        }
+
+        return returnList;
+    }
+
+    ArrayList GetPotentialStairPositionsInColumn(int column)
+    {
+        ArrayList returnList = new ArrayList();
+
+        for (int i = 0; i < NumBuildingBlocksUp; ++i)
+        {
+            if (TileSetGrid[column, i] != TileSet.Empty)
+            {
+                returnList.Add(new GridLocation(column, i));
+            }
+        }
+
+        return returnList;
+    }
+
+    private void InstantiateStairs(GridLocation chosenUp, GridLocation chosenDown)
+    {
+        prefabBuildingBlockWidth = PrefabBuildingBlock_All.localScale.x;
+        prefabBuildingBlockHeight = PrefabBuildingBlock_All.localScale.z;
+
+        int stairsUpGridX = chosenUp.x;
+        int stairsUpGridZ = chosenUp.z;
+        float stairsUpLocX = transform.position.x + (stairsUpGridX * prefabBuildingBlockWidth);
+        float stairsUpLocZ = transform.position.z + (stairsUpGridZ * prefabBuildingBlockHeight);
+        Transform createStairsUp = (Transform)Instantiate(PrefabStairsUp, new Vector3(stairsUpLocX, 0.0f, stairsUpLocZ), Quaternion.identity);
+
+        int stairsDownGridX = chosenDown.x;
+        int stairsDownGridZ = chosenDown.z;
+        float stairsDownLocX = transform.position.x + (stairsDownGridX * prefabBuildingBlockWidth);
+        float stairsDownLocZ = transform.position.z + (stairsDownGridZ * prefabBuildingBlockHeight);
+        Transform createStairsDown = (Transform)Instantiate(PrefabStairsDown, new Vector3(stairsDownLocX, 0.0f, stairsDownLocZ), Quaternion.identity);
+
+        stairsUpLocation = new GridLocation(stairsUpGridX, stairsUpGridZ);
+        stairsDownLocation = new GridLocation(stairsDownGridX, stairsDownGridZ);
+
+        createStairsUp.parent = OtherStuffParent;
+        createStairsDown.parent = OtherStuffParent;
+    }
+
+    private void CreateStairsRandom()
+    {
+        ArrayList potentialStairPositions = GetPotentialStairPositions();
+
+        int chosenUpIndex = Random.Range(0, potentialStairPositions.Count);
+        GridLocation chosenUp = (GridLocation)potentialStairPositions[chosenUpIndex];
+        potentialStairPositions.RemoveAt(chosenUpIndex);
+        int chosenDownIndex = Random.Range(0, potentialStairPositions.Count);
+        GridLocation chosenDown = (GridLocation)potentialStairPositions[chosenDownIndex];
+
+        InstantiateStairs(chosenUp, chosenDown);
+    }
+
+    private void CreateStairsAtEdges()
+    {
+        bool placingHorizontally = (Random.Range(0, 2) == 0);
+
+        ArrayList potentialPositions0 = new ArrayList();
+        ArrayList potentialPositions1 = new ArrayList();
+
+        if (placingHorizontally)
+        {
+            for (int i = 0; i < NumBuildingBlocksAcross; ++i)
+            {
+                potentialPositions0 = GetPotentialStairPositionsInColumn(i);
+                if (potentialPositions0.Count > 0)
+                {
+                    break;
+                }
+            }
+
+            for (int i = NumBuildingBlocksAcross - 1; i >= 0; --i)
+            {
+                potentialPositions1 = GetPotentialStairPositionsInColumn(i);
+
+                if (potentialPositions1.Count > 0)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < NumBuildingBlocksUp; ++i)
+            {
+                potentialPositions0 = GetPotentialStairPositionsInRow(i);
+                if (potentialPositions0.Count > 0)
+                {
+                    break;
+                }
+            }
+
+            for (int i = NumBuildingBlocksUp - 1; i >= 0; --i)
+            {
+                potentialPositions1 = GetPotentialStairPositionsInRow(i);
+                if (potentialPositions1.Count > 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        if (potentialPositions0.Count <= 0 || potentialPositions1.Count <= 0)
+        {
+            Debug.LogWarning("DungeonGenerator::CreateStairsAtEdges() couldn't find valid potential placement stairs up/down positions!");
+        }
+
+        bool stairsUpFromPositions0 = (Random.Range(0, 2) == 0);
+        if (stairsUpFromPositions0)
+        {
+            int chosenUpIndex = Random.Range(0, potentialPositions0.Count);
+            GridLocation chosenUp = (GridLocation)potentialPositions0[chosenUpIndex];
+            potentialPositions1.Remove(new GridLocation(chosenUp.x, chosenUp.z));
+            int chosenDownIndex = Random.Range(0, potentialPositions1.Count);
+            GridLocation chosenDown = (GridLocation)potentialPositions1[chosenDownIndex];
+            InstantiateStairs(chosenUp, chosenDown);
+        }
+        else
+        {
+            int chosenUpIndex = Random.Range(0, potentialPositions1.Count);
+            GridLocation chosenUp = (GridLocation)potentialPositions1[chosenUpIndex];
+            potentialPositions0.Remove(new GridLocation(chosenUp.x, chosenUp.z));
+            int chosenDownIndex = Random.Range(0, potentialPositions0.Count);
+            GridLocation chosenDown = (GridLocation)potentialPositions0[chosenDownIndex];
+            InstantiateStairs(chosenUp, chosenDown);
+        }
+    }
+
+    void CreateDungeonFloor()
+    {
+        FillDungeonBuildingBlockGrid();
+
+        if (stairPlacement == StairPlacement.Random)
+        {
+            CreateStairsRandom();
+        }
+        else if (stairPlacement == StairPlacement.AtEdge)
+        {
+            CreateStairsAtEdges();
+        }
+
+        InstantiateDungeonBuildingBlocksFromGrid();
+
+        SetAdventurerLocation(new GridLocation(stairsUpLocation.x, stairsUpLocation.z));
+    }
+
+    void Start()
+    {
+        TileSetGrid = new TileSet[NumBuildingBlocksAcross, NumBuildingBlocksUp];
+        CreateDungeonFloor();
+    }
+
+    void DeleteDungeonFloor()
+    {
+        for (int i = 0; i < PrefabBuildingBlockParent.childCount; ++i)
+        {
+            Destroy(PrefabBuildingBlockParent.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < OtherStuffParent.childCount; ++i)
+        {
+            Destroy(OtherStuffParent.GetChild(i).gameObject);
+        }
+    }
+
     public void GoToNextFloor()
     {
-
+        DeleteDungeonFloor();
+        CreateDungeonFloor();
+        DungeonFloorNumber++;
     }
 
     public bool IsOnStairsDown()
     {
-        return false;
+        return adventurerLocation.x == stairsDownLocation.x && adventurerLocation.z == stairsDownLocation.z;
     }
 
     void SetAdventurerLocation(GridLocation newLocation)
