@@ -14,12 +14,13 @@ public class Adventurer : MonoBehaviour {
     {
         adventurerName = "The Adventurer";
         totalExperience = 0;
+        maxHealth = 100;
         currentHealth = maxHealth;
     }
 
     private void OnGUI()
     {
-        if (ScreenManager.GetScreen() != ScreenState.MainMenu)
+        if (ScreenManager.GetScreen() != ScreenState.MainMenuScreen && ScreenManager.GetScreen() != ScreenState.DungeonScreen)
         {
             return;
         }

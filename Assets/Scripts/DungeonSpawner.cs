@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dungeon : MonoBehaviour {
+public class DungeonSpawner : MonoBehaviour {
 
     private enum TileSet { None, Empty, EndNorth, EndEast, EndSouth, EndWest, NorthEast, NorthSouth, NorthWest, EastSouth, EastWest, SouthWest, NoNorth, NoEast, NoSouth, NoWest, All }
-    private enum Direction { North, East, South, West}
+    public enum Direction { North, East, South, West}
     public enum StairPlacement { Random, AtEdge }
 
     public ScreenManager ScreeManager;
@@ -143,6 +143,15 @@ public class Dungeon : MonoBehaviour {
             returnList.Add(value);
         }
         return returnList;
+    }
 
+    public bool IsOnStairsDown()
+    {
+        return false;
+    }
+
+    public bool MoveAdventurer(Direction direction)
+    {
+        return false;
     }
 }
