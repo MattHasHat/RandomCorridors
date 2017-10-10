@@ -78,10 +78,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Character.cs" />
-    <Compile Include="Assets\Scripts\Dungeon.cs" />
+    <Compile Include="Assets\Scripts\Adventurer.cs" />
+    <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\DungeonSpawner.cs" />
     <Compile Include="Assets\Scripts\GridLocation.cs" />
-    <Compile Include="Assets\Scripts\MenuStates.cs" />
+    <Compile Include="Assets\Scripts\ScreenManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
