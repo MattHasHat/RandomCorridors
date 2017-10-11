@@ -16,7 +16,7 @@ public class MainMenuScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 40), "Play"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 40), "Start"))
         {
             ScreenManager.SetScreen(ScreenState.PauseScreen);
         }

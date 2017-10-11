@@ -19,13 +19,13 @@ public class ScreenManager : MonoBehaviour
         next = newScreenState;
     }
 
-    private void Start()
+    void Start()
     {
         next = ScreenState.None;
         current = ScreenState.MainMenuScreen;
     }
 
-    private void Update()
+    void Update()
     {
         if (next != ScreenState.None)
         {

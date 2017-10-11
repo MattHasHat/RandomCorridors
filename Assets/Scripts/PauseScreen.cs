@@ -17,7 +17,7 @@ public class PauseScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 40), "Go on an Adventure"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 40), "Time to Adventure"))
         {
             ScreenManager.SetScreen(ScreenState.DungeonScreen);
         }

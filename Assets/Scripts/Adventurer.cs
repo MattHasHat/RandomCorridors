@@ -12,7 +12,7 @@ public class Adventurer : MonoBehaviour
 
     void Start()
     {
-        adventurerName = "The Adventurer";
+        adventurerName = "Adventurer";
         totalExperience = 0;
         maxHealth = 100;
         currentHealth = maxHealth;
@@ -20,10 +20,11 @@ public class Adventurer : MonoBehaviour
 
     void OnGUI()
     {
-        if (ScreenManager.GetScreen() != ScreenState.MainMenuScreen && ScreenManager.GetScreen() != ScreenState.DungeonScreen)
+        if (ScreenManager.GetScreen() != ScreenState.DungeonScreen && ScreenManager.GetScreen() != ScreenState.InventoryScreen)
         {
             return;
         }
+
         GUI.depth = 0;
         GUI.Box(new Rect(Screen.width - 150, 25, 125, 200), "Name: " + adventurerName);
         GUI.Label(new Rect(Screen.width - 150, 75, 125, 25), "XP: " + totalExperience);

@@ -8,7 +8,7 @@ public class DungeonSpawner : MonoBehaviour
     public enum Direction { North, East, South, West }
     public enum StairPlacement { Random, AtEdge }
 
-    public ScreenManager ScreeManager;
+    public ScreenManager ScreenManager;
     public Adventurer Adventurer;
 
     public Transform PrefabBuildingBlock_Empty;
@@ -121,7 +121,7 @@ public class DungeonSpawner : MonoBehaviour
                         for (int childIndex = 0; childIndex < createBlock.childCount; ++childIndex)
                         {
                             Transform child = createBlock.GetChild(childIndex);
-                            child.renderer.material = MaterialOverrideStairsUp;
+                            child.GetComponent<Renderer>().material = MaterialOverrideStairsUp;
                         }
                     }
                     else if (MaterialOverrideStairsDown != null && i == stairsDownLocation.x && j == stairsDownLocation.z)
@@ -129,7 +129,7 @@ public class DungeonSpawner : MonoBehaviour
                         for (int childIndex = 0; childIndex < createBlock.childCount; ++childIndex)
                         {
                             Transform child = createBlock.GetChild(childIndex);
-                            child.renderer.material = MaterialOverrideStairsDown;
+                            child.GetComponent<Renderer>().material = MaterialOverrideStairsDown;
                         }
                     }
 
@@ -821,6 +821,7 @@ public class DungeonSpawner : MonoBehaviour
             SetAdventurerLocation(new GridLocation(adventurerLocation.x + 1, adventurerLocation.z));
             return true;
         }
+
         return false;
     }
 }

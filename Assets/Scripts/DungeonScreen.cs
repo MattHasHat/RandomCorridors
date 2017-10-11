@@ -19,13 +19,16 @@ public class DungeonScreen : MonoBehaviour
         {
             ScreenManager.SetScreen(ScreenState.PauseScreen);
         }
-
-
+        else if (Input.GetKeyUp(KeyCode.I))
+        {
+            ScreenManager.SetScreen(ScreenState.InventoryScreen);
+        }
         else if (Input.GetKeyUp(KeyCode.Space) && !ChangeFloor && DungeonSpawner.IsOnStairsDown())
         {
             ScreenManager.SetScreen(ScreenState.TransitionScreen);
         }
 
+        HandleMovementInput();
     }
 
     void HandleMovementInput()
@@ -38,19 +41,16 @@ public class DungeonScreen : MonoBehaviour
             moveSuccess = true;
 
         }
-
         else if (Input.GetKeyUp(KeyCode.A))
         {
             DungeonSpawner.MoveAdventurer(DungeonSpawner.Direction.West);
             moveSuccess = true;
         }
-
         else if (Input.GetKeyUp(KeyCode.S))
         {
             DungeonSpawner.MoveAdventurer(DungeonSpawner.Direction.South);
             moveSuccess = true;
         }
-
         else if (Input.GetKeyUp(KeyCode.D))
         {
             DungeonSpawner.MoveAdventurer(DungeonSpawner.Direction.East);
@@ -74,7 +74,7 @@ public class DungeonScreen : MonoBehaviour
         GUI.Box(new Rect(25, 25, 150, 25), "Dungeon Floor: " + DungeonSpawner.DungeonFloorNumber);
         GUI.Label(new Rect(25, 55, 250, 25), "WASD = move");
         GUI.Label(new Rect(25, 75, 250, 25), "Z = zoom in/out");
-        GUI.Label(new Rect(25, 95, 250, 25), "H = back to home base");
+        GUI.Label(new Rect(25, 95, 250, 25), "P = back to pause");
         GUI.Label(new Rect(25, 115, 250, 25), "I = open inventory");
 
         if (!ChangeFloor)
