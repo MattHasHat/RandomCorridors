@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[AddComponentMenu("Scripts/TransitionScreen")]
 public class TransitionScreen : MonoBehaviour
 {
     public ScreenManager ScreenManager;

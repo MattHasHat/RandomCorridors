@@ -23,7 +23,7 @@ public class DungeonScreen : MonoBehaviour
         {
             ScreenManager.SetScreen(ScreenState.InventoryScreen);
         }
-        else if (Input.GetKeyUp(KeyCode.Space) && !ChangeFloor && DungeonSpawner.IsOnStairsDown())
+        else if (Input.GetKeyUp(KeyCode.Space) && !ChangeFloor && DungeonSpawner.IsOnStairs())
         {
             ScreenManager.SetScreen(ScreenState.TransitionScreen);
         }
@@ -57,7 +57,7 @@ public class DungeonScreen : MonoBehaviour
             moveSuccess = true;
         }
 
-        if (moveSuccess && ChangeFloor && DungeonSpawner.IsOnStairsDown())
+        if (moveSuccess && ChangeFloor && DungeonSpawner.IsOnStairs())
         {
             ScreenManager.SetScreen(ScreenState.TransitionScreen);
             return;

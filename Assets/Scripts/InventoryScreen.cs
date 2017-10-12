@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[AddComponentMenu("Scripts/InventoryScreen")]
 public class InventoryScreen : MonoBehaviour
 {
     public ScreenManager ScreenManager;

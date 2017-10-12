@@ -17,8 +17,8 @@ public class GridLocation
     {
         if (obj is GridLocation)
         {
-            GridLocation t = (GridLocation)obj;
-            if (t.x == x && t.z == z)
+            GridLocation test = (GridLocation)obj;
+            if (test.x == x && test.z == z)
             {
                 return true;
             }

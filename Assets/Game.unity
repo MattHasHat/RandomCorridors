@@ -364,46 +364,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScreenManager: {fileID: 91613942}
   Adventurer: {fileID: 70584769}
-  PrefabBuildingBlock_Empty: {fileID: 400000, guid: dff3afaac8121ae44aebf9fcf55e23d0,
-    type: 2}
-  PrefabBuildingBlock_EndNorth: {fileID: 400002, guid: 120d26942527ca04ea874fb95c8f7f44,
-    type: 2}
-  PrefabBuildingBlock_EndEast: {fileID: 400002, guid: 24e2be9b43bbedb45a40fd57775e656f,
-    type: 2}
-  PrefabBuildingBlock_EndSouth: {fileID: 400002, guid: 585d3bc4c54854942a9fc9cac0a9ff3d,
-    type: 2}
-  PrefabBuildingBlock_EndWest: {fileID: 400002, guid: fa4df7ed79cf1734da50a9d9506ba0d6,
-    type: 2}
-  PrefabBuildingBlock_NorthEast: {fileID: 400004, guid: 58d08e978d19144439343d2f8c4bf290,
-    type: 2}
-  PrefabBuildingBlock_NorthSouth: {fileID: 400002, guid: ecd0c71e194c4af40af1c7395b90bf9c,
-    type: 2}
-  PrefabBuildingBlock_NorthWest: {fileID: 400004, guid: faa29fd1afea0af4c879d6cfa68c4b99,
-    type: 2}
-  PrefabBuildingBlock_EastSouth: {fileID: 400004, guid: ed16885ce0071da439c20fcce2322b36,
-    type: 2}
-  PrefabBuildingBlock_EastWest: {fileID: 400002, guid: de9c267eef75bdb4aaf5463b34b37abb,
-    type: 2}
-  PrefabBuildingBlock_SouthWest: {fileID: 400004, guid: 3dba6dc202b82da4d9993837cd23ecfd,
-    type: 2}
-  PrefabBuildingBlock_NoNorth: {fileID: 400006, guid: e2460b5029bc4ca498b5d4b9c14d4c9a,
-    type: 2}
-  PrefabBuildingBlock_NoEast: {fileID: 400006, guid: 8c46ecaecd951884cad7d7e62c29676e,
-    type: 2}
-  PrefabBuildingBlock_NoSouth: {fileID: 400006, guid: 84b8bd50bd6e5554e9e96366abe4560e,
-    type: 2}
-  PrefabBuildingBlock_NoWest: {fileID: 400006, guid: 336d30b778cf34449b2cd466e47957a4,
-    type: 2}
-  PrefabBuildingBlock_All: {fileID: 400004, guid: cdf49e15e9a125448a3ff5b2b1a0e099,
-    type: 2}
+  Tile_Empty: {fileID: 400000, guid: dff3afaac8121ae44aebf9fcf55e23d0, type: 2}
+  Tile_EndNorth: {fileID: 400002, guid: 120d26942527ca04ea874fb95c8f7f44, type: 2}
+  Tile_EndEast: {fileID: 400002, guid: 24e2be9b43bbedb45a40fd57775e656f, type: 2}
+  Tile_EndSouth: {fileID: 400002, guid: 585d3bc4c54854942a9fc9cac0a9ff3d, type: 2}
+  Tile_EndWest: {fileID: 400002, guid: fa4df7ed79cf1734da50a9d9506ba0d6, type: 2}
+  Tile_NorthEast: {fileID: 400004, guid: 58d08e978d19144439343d2f8c4bf290, type: 2}
+  Tile_NorthSouth: {fileID: 400002, guid: ecd0c71e194c4af40af1c7395b90bf9c, type: 2}
+  Tile_NorthWest: {fileID: 400004, guid: faa29fd1afea0af4c879d6cfa68c4b99, type: 2}
+  Tile_EastSouth: {fileID: 400004, guid: ed16885ce0071da439c20fcce2322b36, type: 2}
+  Tile_EastWest: {fileID: 400002, guid: de9c267eef75bdb4aaf5463b34b37abb, type: 2}
+  Tile_SouthWest: {fileID: 400004, guid: 3dba6dc202b82da4d9993837cd23ecfd, type: 2}
+  Tile_NoNorth: {fileID: 400006, guid: e2460b5029bc4ca498b5d4b9c14d4c9a, type: 2}
+  Tile_NoEast: {fileID: 400006, guid: 8c46ecaecd951884cad7d7e62c29676e, type: 2}
+  Tile_NoSouth: {fileID: 400006, guid: 84b8bd50bd6e5554e9e96366abe4560e, type: 2}
+  Tile_NoWest: {fileID: 400006, guid: 336d30b778cf34449b2cd466e47957a4, type: 2}
+  Tile_Cross: {fileID: 400004, guid: cdf49e15e9a125448a3ff5b2b1a0e099, type: 2}
   PrefabStairsUp: {fileID: 400000, guid: 5b021cc47c78ccc4ab07a2ea4f18b0ee, type: 2}
   PrefabStairsDown: {fileID: 400000, guid: f76d929e887c3d94a86f3386608ada22, type: 2}
   MaterialOverrideStairsUp: {fileID: 0}
   MaterialOverrideStairsDown: {fileID: 0}
   PrefabBuildingBlockParent: {fileID: 706084389}
   OtherStuffParent: {fileID: 612365080}
-  NumBuildingBlocksAcross: 10
-  NumBuildingBlocksUp: 10
+  DungeonWidth: 5
+  DungeonHeight: 5
   stairPlacement: 0
   DungeonFloorNumber: 1
 --- !u!4 &311179879

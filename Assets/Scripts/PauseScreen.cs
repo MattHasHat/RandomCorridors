@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[AddComponentMenu("Scripts/PauseScreen")]
 public class PauseScreen : MonoBehaviour
 {
     public ScreenManager ScreenManager;
