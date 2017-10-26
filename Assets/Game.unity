@@ -139,6 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScreenManager: {fileID: 91613942}
   DungeonSpawner: {fileID: 311179878}
+  Adventurer: {fileID: 70584769}
   ChangeFloor: 0
 --- !u!4 &63635564
 Transform:
@@ -151,7 +152,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &70584768
 Prefab:
@@ -196,6 +197,26 @@ Prefab:
       propertyPath: ScreenManager
       value: 
       objectReference: {fileID: 91613942}
+    - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
+      propertyPath: DungeonSpawner
+      value: 
+      objectReference: {fileID: 311179878}
+    - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
+      propertyPath: Tile
+      value: 
+      objectReference: {fileID: 1750547063}
+    - target: {fileID: 400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
   m_IsPrefabParent: 0
@@ -248,7 +269,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &167746426
 GameObject:
@@ -290,7 +311,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &179361494
 GameObject:
@@ -333,7 +354,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311179877
 GameObject:
@@ -364,31 +385,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScreenManager: {fileID: 91613942}
   Adventurer: {fileID: 70584769}
-  Tile_Empty: {fileID: 400000, guid: dff3afaac8121ae44aebf9fcf55e23d0, type: 2}
-  Tile_EndNorth: {fileID: 400002, guid: 120d26942527ca04ea874fb95c8f7f44, type: 2}
-  Tile_EndEast: {fileID: 400002, guid: 24e2be9b43bbedb45a40fd57775e656f, type: 2}
-  Tile_EndSouth: {fileID: 400002, guid: 585d3bc4c54854942a9fc9cac0a9ff3d, type: 2}
-  Tile_EndWest: {fileID: 400002, guid: fa4df7ed79cf1734da50a9d9506ba0d6, type: 2}
-  Tile_NorthEast: {fileID: 400004, guid: 58d08e978d19144439343d2f8c4bf290, type: 2}
-  Tile_NorthSouth: {fileID: 400002, guid: ecd0c71e194c4af40af1c7395b90bf9c, type: 2}
-  Tile_NorthWest: {fileID: 400004, guid: faa29fd1afea0af4c879d6cfa68c4b99, type: 2}
-  Tile_EastSouth: {fileID: 400004, guid: ed16885ce0071da439c20fcce2322b36, type: 2}
-  Tile_EastWest: {fileID: 400002, guid: de9c267eef75bdb4aaf5463b34b37abb, type: 2}
-  Tile_SouthWest: {fileID: 400004, guid: 3dba6dc202b82da4d9993837cd23ecfd, type: 2}
-  Tile_NoNorth: {fileID: 400006, guid: e2460b5029bc4ca498b5d4b9c14d4c9a, type: 2}
-  Tile_NoEast: {fileID: 400006, guid: 8c46ecaecd951884cad7d7e62c29676e, type: 2}
-  Tile_NoSouth: {fileID: 400006, guid: 84b8bd50bd6e5554e9e96366abe4560e, type: 2}
-  Tile_NoWest: {fileID: 400006, guid: 336d30b778cf34449b2cd466e47957a4, type: 2}
-  Tile_Cross: {fileID: 400004, guid: cdf49e15e9a125448a3ff5b2b1a0e099, type: 2}
-  PrefabStairsUp: {fileID: 400000, guid: 5b021cc47c78ccc4ab07a2ea4f18b0ee, type: 2}
-  PrefabStairsDown: {fileID: 400000, guid: f76d929e887c3d94a86f3386608ada22, type: 2}
+  Tile: {fileID: 1750547063}
+  PrefabStairsUp: {fileID: 4158982403990714, guid: 901c6d27c5b07294e81db9a82603c9c5,
+    type: 2}
+  PrefabStairsDown: {fileID: 4145573708592860, guid: 64d2cd51d4c63264994a20056cbc136a,
+    type: 2}
   MaterialOverrideStairsUp: {fileID: 0}
   MaterialOverrideStairsDown: {fileID: 0}
   PrefabBuildingBlockParent: {fileID: 706084389}
   OtherStuffParent: {fileID: 612365080}
   DungeonWidth: 5
   DungeonHeight: 5
-  stairPlacement: 0
+  TileWidth: 0
+  TileHeight: 0
   DungeonFloorNumber: 1
 --- !u!4 &311179879
 Transform:
@@ -539,7 +548,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &706084388
 GameObject:
@@ -609,7 +618,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1226812284
 GameObject:
@@ -647,6 +656,76 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1226812284}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1750547062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1750547064}
+  - component: {fileID: 1750547063}
+  m_Layer: 0
+  m_Name: Tile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1750547063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1750547062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b9897c069db294497076d6ac202eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tile_Empty: {fileID: 4898098608095140, guid: bcbbd58a23f728e4db8a871a2776732a, type: 2}
+  Tile_EndNorth: {fileID: 4182498683000132, guid: 4a8ea405f7feec94bbb475d531ff09b2,
+    type: 2}
+  Tile_EndEast: {fileID: 4160629564433236, guid: 67d66e2081dbc824f98e6b804e228fae,
+    type: 2}
+  Tile_EndSouth: {fileID: 4861382125538728, guid: 2311cfa0c3c202048b0186aee79880dd,
+    type: 2}
+  Tile_EndWest: {fileID: 4706344491032032, guid: 5d72261719a38f84c96416a4fd671474,
+    type: 2}
+  Tile_NorthEast: {fileID: 4158643225137212, guid: 9927d0de3be9969448ecf857b086c43a,
+    type: 2}
+  Tile_NorthSouth: {fileID: 4377267737251856, guid: 74ffd593227242142a3c41cca46bd453,
+    type: 2}
+  Tile_NorthWest: {fileID: 4214517588251928, guid: d8a4b46d1e1e6d44d9da6cb434d72667,
+    type: 2}
+  Tile_EastSouth: {fileID: 4292659026421426, guid: a3d6b358131f9994b8297c9152aaec7c,
+    type: 2}
+  Tile_EastWest: {fileID: 4926727897428912, guid: 4d08a462cf126694e9b42b08e4bd5bdd,
+    type: 2}
+  Tile_SouthWest: {fileID: 4386329848356108, guid: ec59041b22209284396f0410eb0729df,
+    type: 2}
+  Tile_NoNorth: {fileID: 4938222609903940, guid: 2ed80ef3650f9f24abefb2130b4a6ecf,
+    type: 2}
+  Tile_NoEast: {fileID: 4197929035058610, guid: 1af73debb0578b64faf879bc187954f2,
+    type: 2}
+  Tile_NoSouth: {fileID: 4342268002128766, guid: 5dbf065a85ad5874496e76223520664c,
+    type: 2}
+  Tile_NoWest: {fileID: 4134214354835426, guid: 13baeebdfbcd4ba498449873037fd958,
+    type: 2}
+  Tile_Cross: {fileID: 4366751602882886, guid: b7785d6908b774746bb6fa52dd952e6a, type: 2}
+--- !u!4 &1750547064
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1750547062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}

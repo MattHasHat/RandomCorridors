@@ -6,6 +6,7 @@ public class DungeonScreen : MonoBehaviour
 {
     public ScreenManager ScreenManager;
     public DungeonSpawner DungeonSpawner;
+    public Adventurer Adventurer;
     public bool ChangeFloor = false;
 
     void Update()
@@ -23,45 +24,12 @@ public class DungeonScreen : MonoBehaviour
         {
             ScreenManager.SetScreen(ScreenState.InventoryScreen);
         }
-        else if (Input.GetKeyUp(KeyCode.Space) && !ChangeFloor && DungeonSpawner.IsOnStairs())
+        else if (Input.GetKeyUp(KeyCode.Space) && !ChangeFloor && Adventurer.IsOnStairs())
         {
             ScreenManager.SetScreen(ScreenState.TransitionScreen);
         }
 
-        HandleMovementInput();
-    }
-
-    void HandleMovementInput()
-    {
-        bool moveSuccess = false;
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            DungeonSpawner.MoveAdventurer(DungeonSpawner.Direction.North);
-            moveSuccess = true;
-
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            DungeonSpawner.MoveAdventurer(DungeonSpawner.Direction.West);
-            moveSuccess = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            DungeonSpawner.MoveAdventurer(DungeonSpawner.Direction.South);
-            moveSuccess = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            DungeonSpawner.MoveAdventurer(DungeonSpawner.Direction.East);
-            moveSuccess = true;
-        }
-
-        if (moveSuccess && ChangeFloor && DungeonSpawner.IsOnStairs())
-        {
-            ScreenManager.SetScreen(ScreenState.TransitionScreen);
-            return;
-        }
+        Adventurer.HandleMovementInput();
     }
 
     void OnGUI()
