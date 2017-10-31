@@ -8,33 +8,28 @@ public class DungeonSpawner : MonoBehaviour
     public Adventurer Adventurer;
     public Tile Tile;
 
-    public Transform PrefabStairsUp;
-    public Transform PrefabStairsDown;
+    public Transform StairsUp;
+    public Transform StairsDown;
+    public Transform Key;
+    public Transform TileParent;
+    public Transform ObjectParent;
+    public Transform Camera;
 
-    public Material MaterialOverrideStairsUp;
-    public Material MaterialOverrideStairsDown;
-
-    public Transform PrefabBuildingBlockParent;
-    public Transform OtherStuffParent;
     public int DungeonWidth;
     public int DungeonHeight;
-
-    public float TileWidth;
-    public float TileHeight;
+    public int DungeonFloorNumber = 1;
 
     public GridLocation AdventurerLocation;
     public GridLocation StairsUpLocation;
     public GridLocation StairsDownLocation;
-
-    [HideInInspector]
-    public int DungeonFloorNumber = 1;
+    public GridLocation KeyLocation;
 
     public TileSet[,] TileSetGrid;
 
     void InitializeDungeonTileFromGrid()
     {
-        TileWidth = Tile.Tile_Cross.localScale.x;
-        TileHeight = Tile.Tile_Cross.localScale.z;
+        float TileWidth = Tile.Tile_Cross.localScale.x;
+        float TileHeight = Tile.Tile_Cross.localScale.z;
 
         for (int i = 0; i < DungeonWidth; i++)
         {
@@ -44,27 +39,9 @@ public class DungeonSpawner : MonoBehaviour
                 {
                     float locationX = transform.position.x + (i * TileWidth);
                     float locationY = transform.position.z + (j * TileHeight);
-                    Transform prefabToMake = Tile.GetPrefabFromTileSet(TileSetGrid[i, j]);
-                    Transform createBlock = (Transform)Instantiate(prefabToMake, new Vector3(locationX, 0.0f, locationY), Quaternion.identity);
-
-                    if (MaterialOverrideStairsUp != null && i == StairsUpLocation.x && j == StairsUpLocation.z)
-                    {
-                        for (int childIndex = 0; childIndex < createBlock.childCount; childIndex++)
-                        {
-                            Transform child = createBlock.GetChild(childIndex);
-                            child.GetComponent<Renderer>().material = MaterialOverrideStairsUp;
-                        }
-                    }
-                    else if (MaterialOverrideStairsDown != null && i == StairsDownLocation.x && j == StairsDownLocation.z)
-                    {
-                        for (int childIndex = 0; childIndex < createBlock.childCount; ++childIndex)
-                        {
-                            Transform child = createBlock.GetChild(childIndex);
-                            child.GetComponent<Renderer>().material = MaterialOverrideStairsDown;
-                        }
-                    }
-
-                    createBlock.parent = PrefabBuildingBlockParent;
+                    Transform selectedTile = Tile.GetPrefabFromTileSet(TileSetGrid[i, j]);
+                    Transform createTile = (Transform)Instantiate(selectedTile, new Vector3(locationX, 0.0f, locationY), Quaternion.identity);
+                    createTile.parent = TileParent;
                 }
             }
         }
@@ -81,7 +58,6 @@ public class DungeonSpawner : MonoBehaviour
 
         possibleTiles.Remove(TileSet.Empty);
         possibleTiles.Remove(TileSet.None);
-
         possibleTiles.Remove(TileSet.EndNorth);
         possibleTiles.Remove(TileSet.EndEast);
         possibleTiles.Remove(TileSet.EndSouth);
@@ -352,6 +328,7 @@ public class DungeonSpawner : MonoBehaviour
 
         bool pathFound = false;
         bool searchCompleted = false;
+
         toSearchList.Add(new GridLocation(startLocationX, startLocationZ));
 
         while (!searchCompleted)
@@ -364,6 +341,7 @@ public class DungeonSpawner : MonoBehaviour
 
             GridLocation toSearch = (GridLocation)toSearchList[0];
             toSearchList.RemoveAt(0);
+
             if (searchedList.Contains(toSearch) == false)
             {
                 searchedList.Add(toSearch);
@@ -391,6 +369,7 @@ public class DungeonSpawner : MonoBehaviour
                 if (GridLocationValidEast(new GridLocation(toSearch.x, toSearch.z)))
                 {
                     GridLocation newLocation = new GridLocation(toSearch.x + 1, toSearch.z);
+
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
                         toSearchList.Add(newLocation);
@@ -401,6 +380,7 @@ public class DungeonSpawner : MonoBehaviour
                 if (GridLocationValidWest(new GridLocation(toSearch.x, toSearch.z)))
                 {
                     GridLocation newLocation = new GridLocation(toSearch.x - 1, toSearch.z);
+
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
                         toSearchList.Add(newLocation);
@@ -410,6 +390,7 @@ public class DungeonSpawner : MonoBehaviour
                 if (GridLocationValidNorth(new GridLocation(toSearch.x, toSearch.z)))
                 {
                     GridLocation newLocation = new GridLocation(toSearch.x, toSearch.z + 1);
+
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
                         toSearchList.Add(newLocation);
@@ -494,7 +475,7 @@ public class DungeonSpawner : MonoBehaviour
         CapOffEnds();
     }
 
-    ArrayList GetPotentialStairPositions()
+    ArrayList GetPotentialObjectLocations()
     {
         ArrayList returnList = new ArrayList();
 
@@ -511,49 +492,62 @@ public class DungeonSpawner : MonoBehaviour
         return returnList;
     }
 
-    void InitializeStairs(GridLocation chosenUp, GridLocation chosenDown)
+    void InitializeObjects(GridLocation chosenUp, GridLocation chosenDown, GridLocation chosenKey)
     {
-        TileWidth = Tile.Tile_Cross.localScale.x;
-        TileHeight = Tile.Tile_Cross.localScale.z;
+        float TileWidth = Tile.Tile_Cross.localScale.x;
+        float TileHeight = Tile.Tile_Cross.localScale.z;
 
         int stairsUpGridX = chosenUp.x;
         int stairsUpGridZ = chosenUp.z;
-        float stairsUpLocX = transform.position.x + (stairsUpGridX * TileWidth);
-        float stairsUpLocZ = transform.position.z + (stairsUpGridZ * TileHeight);
-        Transform createStairsUp = (Transform)Instantiate(PrefabStairsUp, new Vector3(stairsUpLocX, 0.0f, stairsUpLocZ), Quaternion.identity);
+        float stairsUpLocationX = transform.position.x + (stairsUpGridX * TileWidth);
+        float stairsUpLocationZ = transform.position.z + (stairsUpGridZ * TileHeight);
+        Transform createStairsUp = (Transform)Instantiate(StairsUp, new Vector3(stairsUpLocationX, 1.0f, stairsUpLocationZ), Quaternion.identity);
 
         int stairsDownGridX = chosenDown.x;
         int stairsDownGridZ = chosenDown.z;
-        float stairsDownLocX = transform.position.x + (stairsDownGridX * TileWidth);
-        float stairsDownLocZ = transform.position.z + (stairsDownGridZ * TileHeight);
-        Transform createStairsDown = (Transform)Instantiate(PrefabStairsDown, new Vector3(stairsDownLocX, 0.0f, stairsDownLocZ), Quaternion.identity);
+        float stairsDownLocationX = transform.position.x + (stairsDownGridX * TileWidth);
+        float stairsDownLocationZ = transform.position.z + (stairsDownGridZ * TileHeight);
+        Transform createStairsDown = (Transform)Instantiate(StairsDown, new Vector3(stairsDownLocationX, 1.0f, stairsDownLocationZ), Quaternion.identity);
+
+        int keyGridX = chosenKey.x;
+        int keyGridZ = chosenKey.z;
+        float keyLocationX = transform.position.x + (keyGridX * TileWidth);
+        float keyLocationZ = transform.position.z + (keyGridZ * TileHeight);
+        Transform createKey = (Transform)Instantiate(Key, new Vector3(keyLocationX, 1.05f, keyLocationZ), Quaternion.Euler(0, 135, -90));
 
         StairsUpLocation = new GridLocation(stairsUpGridX, stairsUpGridZ);
         StairsDownLocation = new GridLocation(stairsDownGridX, stairsDownGridZ);
+        KeyLocation = new GridLocation(keyGridX, keyGridZ);
 
-        createStairsUp.parent = OtherStuffParent;
-        createStairsDown.parent = OtherStuffParent;
+        createStairsUp.parent = ObjectParent;
+        createStairsDown.parent = ObjectParent;
+        createKey.parent = ObjectParent;
     }
 
-    void PlaceStairs()
+    void PlaceObjects()
     {
-        ArrayList potentialStairPositions = GetPotentialStairPositions();
+        ArrayList potentialObjectPositions = GetPotentialObjectLocations();
 
-        int chosenUpIndex = Random.Range(0, potentialStairPositions.Count);
-        GridLocation chosenUp = (GridLocation)potentialStairPositions[chosenUpIndex];
-        potentialStairPositions.RemoveAt(chosenUpIndex);
-        int chosenDownIndex = Random.Range(0, potentialStairPositions.Count);
-        GridLocation chosenDown = (GridLocation)potentialStairPositions[chosenDownIndex];
+        int chosenUpIndex = Random.Range(0, potentialObjectPositions.Count);
+        GridLocation chosenUp = (GridLocation)potentialObjectPositions[chosenUpIndex];
+        potentialObjectPositions.RemoveAt(chosenUpIndex);
 
-        InitializeStairs(chosenUp, chosenDown);
+        int chosenDownIndex = Random.Range(0, potentialObjectPositions.Count);
+        GridLocation chosenDown = (GridLocation)potentialObjectPositions[chosenDownIndex];
+        potentialObjectPositions.RemoveAt(chosenDownIndex);
+
+        int chosenKeyIndex = Random.Range(0, potentialObjectPositions.Count);
+        GridLocation chosenKey = (GridLocation)potentialObjectPositions[chosenKeyIndex];
+
+        InitializeObjects(chosenUp, chosenDown, chosenKey);
     }
 
     void CreateDungeonFloor()
     {
         FillDungeonTileGrid();
-        PlaceStairs();
+        PlaceObjects();
         InitializeDungeonTileFromGrid();
-        SetAdventurerLocation(new GridLocation(StairsUpLocation.x, StairsUpLocation.z));
+        SetAdventurerLocation(new GridLocation(StairsUpLocation.x, StairsUpLocation.z), Quaternion.identity);
     }
 
     void Start()
@@ -564,14 +558,14 @@ public class DungeonSpawner : MonoBehaviour
 
     void DeleteDungeonFloor()
     {
-        for (int i = 0; i < PrefabBuildingBlockParent.childCount; i++)
+        for (int i = 0; i < TileParent.childCount; i++)
         {
-            Destroy(PrefabBuildingBlockParent.GetChild(i).gameObject);
+            Destroy(TileParent.GetChild(i).gameObject);
         }
 
-        for (int i = 0; i < OtherStuffParent.childCount; i++)
+        for (int i = 0; i < ObjectParent.childCount; i++)
         {
-            Destroy(OtherStuffParent.GetChild(i).gameObject);
+            Destroy(ObjectParent.GetChild(i).gameObject);
         }
     }
 
@@ -582,16 +576,18 @@ public class DungeonSpawner : MonoBehaviour
         DungeonFloorNumber++;
     }
 
-    public void SetAdventurerLocation(GridLocation location)
+    public void SetAdventurerLocation(GridLocation location, Quaternion direction)
     {
         AdventurerLocation = location;
 
-        TileWidth = Tile.Tile_Cross.localScale.x;
-        TileHeight = Tile.Tile_Cross.localScale.z;
+        float TileWidth = Tile.Tile_Cross.localScale.x;
+        float TileHeight = Tile.Tile_Cross.localScale.z;
 
         float positionX = transform.position.x + (location.x * TileWidth);
         float positionZ = transform.position.z + (location.z * TileHeight);
 
         Adventurer.transform.position = new Vector3(positionX, 1.0f, positionZ);
+        Adventurer.transform.rotation = direction;
+        Camera.transform.position = new Vector3(positionX, 11.0f, positionZ);
     }
 }

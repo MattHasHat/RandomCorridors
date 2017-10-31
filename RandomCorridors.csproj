@@ -79,11 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Adventurer.cs" />
-    <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\DungeonScreen.cs" />
     <Compile Include="Assets\Scripts\DungeonSpawner.cs" />
     <Compile Include="Assets\Scripts\GridLocation.cs" />
-    <Compile Include="Assets\Scripts\InventoryScreen.cs" />
     <Compile Include="Assets\Scripts\MainMenuScreen.cs" />
     <Compile Include="Assets\Scripts\PauseScreen.cs" />
     <Compile Include="Assets\Scripts\ScreenManager.cs" />

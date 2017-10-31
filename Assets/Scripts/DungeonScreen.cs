@@ -7,6 +7,7 @@ public class DungeonScreen : MonoBehaviour
     public ScreenManager ScreenManager;
     public DungeonSpawner DungeonSpawner;
     public Adventurer Adventurer;
+
     public bool ChangeFloor = false;
 
     void Update()
@@ -19,10 +20,6 @@ public class DungeonScreen : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.P))
         {
             ScreenManager.SetScreen(ScreenState.PauseScreen);
-        }
-        else if (Input.GetKeyUp(KeyCode.I))
-        {
-            ScreenManager.SetScreen(ScreenState.InventoryScreen);
         }
         else if (Input.GetKeyUp(KeyCode.Space) && !ChangeFloor && Adventurer.IsOnStairs())
         {
@@ -43,7 +40,6 @@ public class DungeonScreen : MonoBehaviour
         GUI.Label(new Rect(25, 55, 250, 25), "WASD = move");
         GUI.Label(new Rect(25, 75, 250, 25), "Z = zoom in/out");
         GUI.Label(new Rect(25, 95, 250, 25), "P = back to pause");
-        GUI.Label(new Rect(25, 115, 250, 25), "I = open inventory");
 
         if (!ChangeFloor)
         {
