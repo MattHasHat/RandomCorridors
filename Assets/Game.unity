@@ -140,7 +140,6 @@ MonoBehaviour:
   ScreenManager: {fileID: 91613942}
   DungeonSpawner: {fileID: 311179878}
   Adventurer: {fileID: 1255898718}
-  ChangeFloor: 0
 --- !u!4 &63635564
 Transform:
   m_ObjectHideFlags: 0
@@ -222,7 +221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScreenManager: {fileID: 91613942}
-  Background: {fileID: 2800000, guid: 83f5636fa9e91c54b833d24b6420bfc1, type: 3}
+  DungeonSpawner: {fileID: 311179878}
+  Background: {fileID: 2800000, guid: f5e77b0e265eb9c498bc599c53684a28, type: 3}
 --- !u!4 &167746428
 Transform:
   m_ObjectHideFlags: 0
@@ -270,7 +270,8 @@ MonoBehaviour:
   StairsDown: {fileID: 4145573708592860, guid: 64d2cd51d4c63264994a20056cbc136a, type: 2}
   Key: {fileID: 4368694971510498, guid: 7b9aa504b0c38254c8d0969756d9c19b, type: 2}
   TileParent: {fileID: 706084389}
-  ObjectParent: {fileID: 612365080}
+  StairsParent: {fileID: 612365080}
+  KeyParent: {fileID: 1719029646}
   Camera: {fileID: 415672087}
   DungeonWidth: 5
   DungeonHeight: 5
@@ -287,8 +288,9 @@ Transform:
   m_Children:
   - {fileID: 706084389}
   - {fileID: 612365080}
+  - {fileID: 1719029646}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &411967767
 GameObject:
@@ -462,7 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 612365080}
   m_Layer: 0
-  m_Name: ObjectParent
+  m_Name: StairsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -480,49 +482,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 311179879}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &680805708
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 680805710}
-  - component: {fileID: 680805709}
-  m_Layer: 0
-  m_Name: TransitionScreen
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &680805709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 680805708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8f84a6eca7723444ab3239dec750b3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScreenManager: {fileID: 91613942}
-  DungeonSpawner: {fileID: 311179878}
-  Background: {fileID: 2800000, guid: 50fe8e3d98acaed4881c58922455f5b6, type: 3}
---- !u!4 &680805710
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 680805708}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &706084388
 GameObject:
@@ -580,7 +539,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScreenManager: {fileID: 91613942}
-  Background: {fileID: 2800000, guid: 0b24a76908197dd4091a9c5379cd1125, type: 3}
+  DungeonSpawner: {fileID: 311179878}
+  Background: {fileID: 2800000, guid: b184b32dceefb5642959791e6a7069ee, type: 3}
 --- !u!4 &790390594
 Transform:
   m_ObjectHideFlags: 0
@@ -637,7 +597,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
       propertyPath: ScreenManager
@@ -714,9 +674,37 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1623361391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.879256, y: -10.666054, z: 1.7521104}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1719029645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1719029646}
+  m_Layer: 0
+  m_Name: KeyParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1719029646
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1719029645}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 311179879}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

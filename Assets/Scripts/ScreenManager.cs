@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ScreenState { None, MainMenuScreen, DungeonScreen, PauseScreen, TransitionScreen }
+public enum ScreenState { None, MainMenuScreen, DungeonScreen, PauseScreen, }
 
 public class ScreenManager : MonoBehaviour
 {

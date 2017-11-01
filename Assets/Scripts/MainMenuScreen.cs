@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuScreen : MonoBehaviour
 {
     public ScreenManager ScreenManager;
+    public DungeonSpawner DungeonSpawner;
     public Texture2D Background;
 
     void OnGUI()
@@ -16,12 +17,13 @@ public class MainMenuScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 40), "Start"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 70, 150, 40), "Start"))
         {
-            ScreenManager.SetScreen(ScreenState.PauseScreen);
+            DungeonSpawner.StartGame();
+            ScreenManager.SetScreen(ScreenState.DungeonScreen);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2, 100, 40), "Quit"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 120, 150, 40), "Quit"))
         {
             Application.Quit();
         }

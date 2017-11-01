@@ -8,10 +8,16 @@ public class DungeonScreen : MonoBehaviour
     public DungeonSpawner DungeonSpawner;
     public Adventurer Adventurer;
 
-    public bool ChangeFloor = false;
-
     void Update()
     {
+        if (Adventurer.KeyFound == true)
+        {
+            for (int i = 0; i < DungeonSpawner.KeyParent.childCount; i++)
+            {
+                Destroy(DungeonSpawner.KeyParent.GetChild(i).gameObject);
+            }
+        }
+
         if (ScreenManager.GetScreen() != ScreenState.DungeonScreen)
         {
             return;
@@ -21,11 +27,12 @@ public class DungeonScreen : MonoBehaviour
         {
             ScreenManager.SetScreen(ScreenState.PauseScreen);
         }
-        else if (Input.GetKeyUp(KeyCode.Space) && !ChangeFloor && Adventurer.IsOnStairs())
+        else if (Input.GetKeyUp(KeyCode.Space) && Adventurer.IsOnStairs() && Adventurer.HaveFoundKey())
         {
-            ScreenManager.SetScreen(ScreenState.TransitionScreen);
+            DungeonSpawner.GoToNextFloor();
         }
 
+        Adventurer.HaveFoundKey();
         Adventurer.HandleMovementInput();
     }
 
@@ -36,14 +43,14 @@ public class DungeonScreen : MonoBehaviour
             return;
         }
 
-        GUI.Box(new Rect(25, 25, 150, 25), "Dungeon Floor: " + DungeonSpawner.DungeonFloorNumber);
-        GUI.Label(new Rect(25, 55, 250, 25), "WASD = move");
-        GUI.Label(new Rect(25, 75, 250, 25), "Z = zoom in/out");
-        GUI.Label(new Rect(25, 95, 250, 25), "P = back to pause");
+        GUI.Box(new Rect(25, 25, 200, 25), "Dungeon Floor: " + DungeonSpawner.DungeonFloorNumber);
+        GUI.Box(new Rect(25, 55, 200, 25), "Stamina Remaining: " + Adventurer.Stamina);
+        GUI.Label(new Rect(25, 85, 250, 25), "WASD for Movement");
+        GUI.Label(new Rect(25, 115, 250, 25), "P to Pause");
 
-        if (!ChangeFloor)
+        if (Adventurer.IsOnStairs())
         {
-            GUI.Label(new Rect(25, 135, 250, 25), "Spacebar on red = next floor");
+            GUI.Label(new Rect(25, 145, 250, 25), "Spacebar on Panel and Go to Next Floor");
         }
     }
 }

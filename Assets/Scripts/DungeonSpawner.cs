@@ -12,7 +12,8 @@ public class DungeonSpawner : MonoBehaviour
     public Transform StairsDown;
     public Transform Key;
     public Transform TileParent;
-    public Transform ObjectParent;
+    public Transform StairsParent;
+    public Transform KeyParent;
     public Transform Camera;
 
     public int DungeonWidth;
@@ -519,9 +520,9 @@ public class DungeonSpawner : MonoBehaviour
         StairsDownLocation = new GridLocation(stairsDownGridX, stairsDownGridZ);
         KeyLocation = new GridLocation(keyGridX, keyGridZ);
 
-        createStairsUp.parent = ObjectParent;
-        createStairsDown.parent = ObjectParent;
-        createKey.parent = ObjectParent;
+        createStairsUp.parent = StairsParent;
+        createStairsDown.parent = StairsParent;
+        createKey.parent = KeyParent;
     }
 
     void PlaceObjects()
@@ -548,14 +549,9 @@ public class DungeonSpawner : MonoBehaviour
         PlaceObjects();
         InitializeDungeonTileFromGrid();
         SetAdventurerLocation(new GridLocation(StairsUpLocation.x, StairsUpLocation.z), Quaternion.identity);
+        Adventurer.KeyFound = false;
     }
-
-    void Start()
-    {
-        TileSetGrid = new TileSet[DungeonWidth, DungeonHeight];
-        CreateDungeonFloor();
-    }
-
+    
     void DeleteDungeonFloor()
     {
         for (int i = 0; i < TileParent.childCount; i++)
@@ -563,9 +559,14 @@ public class DungeonSpawner : MonoBehaviour
             Destroy(TileParent.GetChild(i).gameObject);
         }
 
-        for (int i = 0; i < ObjectParent.childCount; i++)
+        for (int i = 0; i < StairsParent.childCount; i++)
         {
-            Destroy(ObjectParent.GetChild(i).gameObject);
+            Destroy(StairsParent.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < KeyParent.childCount; i++)
+        {
+            Destroy(KeyParent.GetChild(i).gameObject);
         }
     }
 
@@ -574,6 +575,19 @@ public class DungeonSpawner : MonoBehaviour
         DeleteDungeonFloor();
         CreateDungeonFloor();
         DungeonFloorNumber++;
+    }
+
+    public void StartGame()
+    {
+        TileSetGrid = new TileSet[DungeonWidth, DungeonHeight];
+        CreateDungeonFloor();
+    }
+
+    public void RestartGame()
+    {
+        DeleteDungeonFloor();
+        DungeonFloorNumber = 1;
+        Adventurer.Stamina = 500;
     }
 
     public void SetAdventurerLocation(GridLocation location, Quaternion direction)

@@ -4,77 +4,42 @@ using UnityEngine;
 
 public class Adventurer : MonoBehaviour
 {
-    public enum Direction { North, East, South, West }
-
-    public ScreenManager ScreenManager;
     public DungeonSpawner DungeonSpawner;
-
-    bool ChangeFloor = false;
-
-    void OnGUI()
-    {
-        if (ScreenManager.GetScreen() != ScreenState.DungeonScreen)
-        {
-            return;
-        }
-    }
-
+    public int Stamina = 500;
+    public bool KeyFound = false;
+    
     public void HandleMovementInput()
     {
-        bool moveSuccess = false;
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            MoveAdventurer(Direction.North);
-            moveSuccess = true;
-
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            MoveAdventurer(Direction.West);
-            moveSuccess = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            MoveAdventurer(Direction.South);
-            moveSuccess = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            MoveAdventurer(Direction.East);
-            moveSuccess = true;
-        }
-
-        if (moveSuccess && ChangeFloor && IsOnStairs())
-        {
-            ScreenManager.SetScreen(ScreenState.TransitionScreen);
-            return;
-        }
-    }
-
-    public bool MoveAdventurer(Direction direction)
-    {
-        if (direction == Direction.North && DungeonSpawner.GridLocationValidNorth(DungeonSpawner.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.W) && DungeonSpawner.GridLocationValidNorth(DungeonSpawner.AdventurerLocation))
         {
             DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x, DungeonSpawner.AdventurerLocation.z + 1), Quaternion.Euler(0, 0, 0));
-            return true;
+            Stamina--;
         }
-        else if (direction == Direction.West && DungeonSpawner.GridLocationValidWest(DungeonSpawner.AdventurerLocation))
-        {
-            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x - 1, DungeonSpawner.AdventurerLocation.z), Quaternion.Euler(0, 270, 0));
-            return true;
-        }
-        else if (direction == Direction.South && DungeonSpawner.GridLocationValidSouth(DungeonSpawner.AdventurerLocation))
-        {
-            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x, DungeonSpawner.AdventurerLocation.z - 1), Quaternion.Euler(0, 180, 0));
-            return true;
-        }
-        else if (direction == Direction.East && DungeonSpawner.GridLocationValidEast(DungeonSpawner.AdventurerLocation))
+        else if (Input.GetKeyUp(KeyCode.D) && DungeonSpawner.GridLocationValidEast(DungeonSpawner.AdventurerLocation))
         {
             DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x + 1, DungeonSpawner.AdventurerLocation.z), Quaternion.Euler(0, 90, 0));
-            return true;
+            Stamina--;
         }
-        return false;
+        else if (Input.GetKeyUp(KeyCode.S) && DungeonSpawner.GridLocationValidSouth(DungeonSpawner.AdventurerLocation))
+        {
+            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x, DungeonSpawner.AdventurerLocation.z - 1), Quaternion.Euler(0, 180, 0));
+            Stamina--;
+        }
+        else if (Input.GetKeyUp(KeyCode.A) && DungeonSpawner.GridLocationValidWest(DungeonSpawner.AdventurerLocation))
+        {
+            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x - 1, DungeonSpawner.AdventurerLocation.z), Quaternion.Euler(0, 270, 0));
+            Stamina--;
+        }
+
+    }
+
+    public bool HaveFoundKey()
+    {
+        if (DungeonSpawner.AdventurerLocation.x == DungeonSpawner.KeyLocation.x && DungeonSpawner.AdventurerLocation.z == DungeonSpawner.KeyLocation.z)
+        {
+            KeyFound = true;
+        }
+        return KeyFound;
     }
 
     public bool IsOnStairs()
