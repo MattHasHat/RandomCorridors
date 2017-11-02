@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonSpawner : MonoBehaviour
+public class LevelGenerator : MonoBehaviour
 {
-    public ScreenManager ScreenManager;
+    public ScreenChanger ScreenChanger;
     public Adventurer Adventurer;
     public Tile Tile;
 
@@ -16,9 +16,12 @@ public class DungeonSpawner : MonoBehaviour
     public Transform KeyParent;
     public Transform Camera;
 
+    public float TileWidth;
+    public float TileDepth;
+
     public int DungeonWidth;
     public int DungeonHeight;
-    public int DungeonFloorNumber = 1;
+    public int DungeonFloorNumber;
 
     public GridLocation AdventurerLocation;
     public GridLocation StairsUpLocation;
@@ -29,8 +32,8 @@ public class DungeonSpawner : MonoBehaviour
 
     void InitializeDungeonTileFromGrid()
     {
-        float TileWidth = Tile.Tile_Cross.localScale.x;
-        float TileHeight = Tile.Tile_Cross.localScale.z;
+        TileWidth = Tile.Cross.localScale.x;
+        TileDepth = Tile.Cross.localScale.z;
 
         for (int i = 0; i < DungeonWidth; i++)
         {
@@ -39,16 +42,18 @@ public class DungeonSpawner : MonoBehaviour
                 if (TileSetGrid[i, j] != TileSet.None)
                 {
                     float locationX = transform.position.x + (i * TileWidth);
-                    float locationY = transform.position.z + (j * TileHeight);
+                    float locationY = transform.position.z + (j * TileDepth);
+
                     Transform selectedTile = Tile.GetPrefabFromTileSet(TileSetGrid[i, j]);
                     Transform createTile = (Transform)Instantiate(selectedTile, new Vector3(locationX, 0.0f, locationY), Quaternion.identity);
+
                     createTile.parent = TileParent;
                 }
             }
         }
     }
 
-    TileSet GetPossibleTile(int locationX, int locationZ, bool westValid, bool northValid, bool eastValid, bool southValid, bool westNotValid, bool northNotValid, bool eastNotValid, bool southNotValid, bool useDeadEnds)
+    TileSet GetPossibleTile(int locationX, int locationZ, bool northValid, bool eastValid, bool southValid, bool westValid, bool northNotValid, bool eastNotValid, bool southNotValid, bool westNotValid, bool useDeadEnds)
     {
         if (useDeadEnds)
         {
@@ -63,14 +68,6 @@ public class DungeonSpawner : MonoBehaviour
         possibleTiles.Remove(TileSet.EndEast);
         possibleTiles.Remove(TileSet.EndSouth);
         possibleTiles.Remove(TileSet.EndWest);
-
-        if (westValid == true)
-        {
-            possibleTiles.Remove(TileSet.NorthEast);
-            possibleTiles.Remove(TileSet.NorthSouth);
-            possibleTiles.Remove(TileSet.EastSouth);
-            possibleTiles.Remove(TileSet.NoWest);
-        }
 
         if (northValid == true)
         {
@@ -96,14 +93,22 @@ public class DungeonSpawner : MonoBehaviour
             possibleTiles.Remove(TileSet.NoSouth);
         }
 
-        if (locationX == 0 || westNotValid == true)
+        if (westValid == true)
         {
+            possibleTiles.Remove(TileSet.NorthEast);
+            possibleTiles.Remove(TileSet.NorthSouth);
+            possibleTiles.Remove(TileSet.EastSouth);
+            possibleTiles.Remove(TileSet.NoWest);
+        }
+
+        if (locationZ == DungeonHeight - 1 || northNotValid == true)
+        {
+            possibleTiles.Remove(TileSet.NorthEast);
+            possibleTiles.Remove(TileSet.NorthSouth);
             possibleTiles.Remove(TileSet.NorthWest);
-            possibleTiles.Remove(TileSet.EastWest);
-            possibleTiles.Remove(TileSet.SouthWest);
-            possibleTiles.Remove(TileSet.NoNorth);
             possibleTiles.Remove(TileSet.NoEast);
             possibleTiles.Remove(TileSet.NoSouth);
+            possibleTiles.Remove(TileSet.NoWest);
             possibleTiles.Remove(TileSet.Cross);
         }
 
@@ -129,14 +134,14 @@ public class DungeonSpawner : MonoBehaviour
             possibleTiles.Remove(TileSet.Cross);
         }
 
-        if (locationZ == DungeonHeight - 1 || northNotValid == true)
+        if (locationX == 0 || westNotValid == true)
         {
-            possibleTiles.Remove(TileSet.NorthEast);
-            possibleTiles.Remove(TileSet.NorthSouth);
             possibleTiles.Remove(TileSet.NorthWest);
+            possibleTiles.Remove(TileSet.EastWest);
+            possibleTiles.Remove(TileSet.SouthWest);
+            possibleTiles.Remove(TileSet.NoNorth);
             possibleTiles.Remove(TileSet.NoEast);
             possibleTiles.Remove(TileSet.NoSouth);
-            possibleTiles.Remove(TileSet.NoWest);
             possibleTiles.Remove(TileSet.Cross);
         }
 
@@ -150,21 +155,22 @@ public class DungeonSpawner : MonoBehaviour
         }
     }
 
-    public bool GridLocationValidEast(GridLocation location)
+    public bool GridLocationValidNorth(GridLocation location)
     {
-        if (location.x == DungeonWidth - 1)
+        if (location.z == DungeonHeight - 1)
         {
             return false;
         }
 
         TileSet tile = TileSetGrid[location.x, location.z];
+
         switch (tile)
         {
-            case TileSet.EndEast:
+            case TileSet.EndNorth:
             case TileSet.NorthEast:
-            case TileSet.EastSouth:
-            case TileSet.EastWest:
-            case TileSet.NoNorth:
+            case TileSet.NorthSouth:
+            case TileSet.NorthWest:
+            case TileSet.NoEast:
             case TileSet.NoSouth:
             case TileSet.NoWest:
             case TileSet.Cross:
@@ -174,45 +180,22 @@ public class DungeonSpawner : MonoBehaviour
         }
     }
 
-    public bool GridLocationValidWest(GridLocation location)
+    public bool GridLocationValidEast(GridLocation location)
     {
-        if (location.x == 0)
+        if (location.x == DungeonWidth - 1)
         {
             return false;
         }
 
         TileSet tile = TileSetGrid[location.x, location.z];
+
         switch (tile)
         {
-            case TileSet.EndWest:
-            case TileSet.NorthWest:
-            case TileSet.EastWest:
-            case TileSet.SouthWest:
-            case TileSet.NoNorth:
-            case TileSet.NoEast:
-            case TileSet.NoSouth:
-            case TileSet.Cross:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public bool GridLocationValidNorth(GridLocation location)
-    {
-        if (location.z == DungeonHeight - 1)
-        {
-            return false;
-        }
-
-        TileSet tile = TileSetGrid[location.x, location.z];
-        switch (tile)
-        {
-            case TileSet.EndNorth:
+            case TileSet.EndEast:
             case TileSet.NorthEast:
-            case TileSet.NorthSouth:
-            case TileSet.NorthWest:
-            case TileSet.NoEast:
+            case TileSet.EastSouth:
+            case TileSet.EastWest:
+            case TileSet.NoNorth:
             case TileSet.NoSouth:
             case TileSet.NoWest:
             case TileSet.Cross:
@@ -230,6 +213,7 @@ public class DungeonSpawner : MonoBehaviour
         }
 
         TileSet tile = TileSetGrid[location.x, location.z];
+
         switch (tile)
         {
             case TileSet.EndSouth:
@@ -246,29 +230,54 @@ public class DungeonSpawner : MonoBehaviour
         }
     }
 
+    public bool GridLocationValidWest(GridLocation location)
+    {
+        if (location.x == 0)
+        {
+            return false;
+        }
+
+        TileSet tile = TileSetGrid[location.x, location.z];
+
+        switch (tile)
+        {
+            case TileSet.EndWest:
+            case TileSet.NorthWest:
+            case TileSet.EastWest:
+            case TileSet.SouthWest:
+            case TileSet.NoNorth:
+            case TileSet.NoEast:
+            case TileSet.NoSouth:
+            case TileSet.Cross:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     TileSet SelectValidTile(GridLocation location)
     {
-        bool westValid = false;
         bool northValid = false;
         bool eastValid = false;
         bool southValid = false;
-        bool westNotValid = false;
+        bool westValid = false;
         bool northNotValid = false;
         bool eastNotValid = false;
         bool southNotValid = false;
+        bool westNotValid = false;
 
-        if (location.x > 0 && TileSetGrid[location.x - 1, location.z] != TileSet.Empty)
+        if (location.z < DungeonHeight - 1 && TileSetGrid[location.x, location.z + 1] != TileSet.Empty)
         {
-            if (GridLocationValidEast(new GridLocation(location.x - 1, location.z)))
+            if (GridLocationValidSouth(new GridLocation(location.x, location.z + 1)))
             {
-                westValid = true;
+                northValid = true;
             }
             else
             {
-                westNotValid = true;
+                northNotValid = true;
             }
         }
-
+        
         if (location.x < DungeonWidth - 1 && TileSetGrid[location.x + 1, location.z] != TileSet.Empty)
         {
             if (GridLocationValidWest(new GridLocation(location.x + 1, location.z)))
@@ -293,19 +302,19 @@ public class DungeonSpawner : MonoBehaviour
             }
         }
 
-        if (location.z < DungeonHeight - 1 && TileSetGrid[location.x, location.z + 1] != TileSet.Empty)
+        if (location.x > 0 && TileSetGrid[location.x - 1, location.z] != TileSet.Empty)
         {
-            if (GridLocationValidSouth(new GridLocation(location.x, location.z + 1)))
+            if (GridLocationValidEast(new GridLocation(location.x - 1, location.z)))
             {
-                northValid = true;
+                westValid = true;
             }
             else
             {
-                northNotValid = true;
+                westNotValid = true;
             }
         }
 
-        return GetPossibleTile(location.x, location.z, westValid, northValid, eastValid, southValid, westNotValid, northNotValid, eastNotValid, southNotValid, false);
+        return GetPossibleTile(location.x, location.z, northValid, eastValid, southValid, westValid, northNotValid, eastNotValid, southNotValid, westNotValid, false);
     }
 
     void FillRemainingGrid()
@@ -401,6 +410,7 @@ public class DungeonSpawner : MonoBehaviour
                 if (GridLocationValidSouth(new GridLocation(toSearch.x, toSearch.z)))
                 {
                     GridLocation newLocation = new GridLocation(toSearch.x, toSearch.z - 1);
+
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
                         toSearchList.Add(newLocation);
@@ -471,6 +481,7 @@ public class DungeonSpawner : MonoBehaviour
                 TileSetGrid[i, j] = TileSet.Empty;
             }
         }
+
         FillRemainingGrid();
         ConnectIslands();
         CapOffEnds();
@@ -495,26 +506,32 @@ public class DungeonSpawner : MonoBehaviour
 
     void InitializeObjects(GridLocation chosenUp, GridLocation chosenDown, GridLocation chosenKey)
     {
-        float TileWidth = Tile.Tile_Cross.localScale.x;
-        float TileHeight = Tile.Tile_Cross.localScale.z;
+        TileWidth = Tile.Cross.localScale.x;
+        TileDepth = Tile.Cross.localScale.z;
 
         int stairsUpGridX = chosenUp.x;
         int stairsUpGridZ = chosenUp.z;
+
         float stairsUpLocationX = transform.position.x + (stairsUpGridX * TileWidth);
-        float stairsUpLocationZ = transform.position.z + (stairsUpGridZ * TileHeight);
-        Transform createStairsUp = (Transform)Instantiate(StairsUp, new Vector3(stairsUpLocationX, 1.0f, stairsUpLocationZ), Quaternion.identity);
+        float stairsUpLocationZ = transform.position.z + (stairsUpGridZ * TileDepth);
+
+        Transform createStairsUp = (Transform)Instantiate(StairsUp, new Vector3(stairsUpLocationX, 0.75f, stairsUpLocationZ), Quaternion.identity);
 
         int stairsDownGridX = chosenDown.x;
         int stairsDownGridZ = chosenDown.z;
+
         float stairsDownLocationX = transform.position.x + (stairsDownGridX * TileWidth);
-        float stairsDownLocationZ = transform.position.z + (stairsDownGridZ * TileHeight);
-        Transform createStairsDown = (Transform)Instantiate(StairsDown, new Vector3(stairsDownLocationX, 1.0f, stairsDownLocationZ), Quaternion.identity);
+        float stairsDownLocationZ = transform.position.z + (stairsDownGridZ * TileDepth);
+
+        Transform createStairsDown = (Transform)Instantiate(StairsDown, new Vector3(stairsDownLocationX, 0.6f, stairsDownLocationZ), Quaternion.identity);
 
         int keyGridX = chosenKey.x;
         int keyGridZ = chosenKey.z;
+
         float keyLocationX = transform.position.x + (keyGridX * TileWidth);
-        float keyLocationZ = transform.position.z + (keyGridZ * TileHeight);
-        Transform createKey = (Transform)Instantiate(Key, new Vector3(keyLocationX, 1.05f, keyLocationZ), Quaternion.Euler(0, 135, -90));
+        float keyLocationZ = transform.position.z + (keyGridZ * TileDepth);
+
+        Transform createKey = (Transform)Instantiate(Key, new Vector3(keyLocationX, 0.6f, keyLocationZ), Quaternion.Euler(0, 135, -90));
 
         StairsUpLocation = new GridLocation(stairsUpGridX, stairsUpGridZ);
         StairsDownLocation = new GridLocation(stairsDownGridX, stairsDownGridZ);
@@ -543,6 +560,21 @@ public class DungeonSpawner : MonoBehaviour
         InitializeObjects(chosenUp, chosenDown, chosenKey);
     }
 
+    public void SetAdventurerLocation(GridLocation location, Quaternion direction)
+    {
+        AdventurerLocation = location;
+
+        TileWidth = Tile.Cross.localScale.x;
+        TileDepth = Tile.Cross.localScale.z;
+
+        float positionX = transform.position.x + (location.x * TileWidth);
+        float positionZ = transform.position.z + (location.z * TileDepth);
+
+        Adventurer.transform.position = new Vector3(positionX, 1.0f, positionZ);
+        Adventurer.transform.rotation = direction;
+        Camera.transform.position = new Vector3(positionX, 11.0f, positionZ);
+    }
+
     void CreateDungeonFloor()
     {
         FillDungeonTileGrid();
@@ -552,7 +584,7 @@ public class DungeonSpawner : MonoBehaviour
         Adventurer.KeyFound = false;
     }
     
-    void DeleteDungeonFloor()
+    public void DeleteDungeonFloor()
     {
         for (int i = 0; i < TileParent.childCount; i++)
         {
@@ -575,33 +607,15 @@ public class DungeonSpawner : MonoBehaviour
         DeleteDungeonFloor();
         CreateDungeonFloor();
         DungeonFloorNumber++;
+        Adventurer.KeyFound = false;
     }
 
     public void StartGame()
     {
         TileSetGrid = new TileSet[DungeonWidth, DungeonHeight];
-        CreateDungeonFloor();
-    }
-
-    public void RestartGame()
-    {
-        DeleteDungeonFloor();
         DungeonFloorNumber = 1;
         Adventurer.Stamina = 500;
-    }
-
-    public void SetAdventurerLocation(GridLocation location, Quaternion direction)
-    {
-        AdventurerLocation = location;
-
-        float TileWidth = Tile.Tile_Cross.localScale.x;
-        float TileHeight = Tile.Tile_Cross.localScale.z;
-
-        float positionX = transform.position.x + (location.x * TileWidth);
-        float positionZ = transform.position.z + (location.z * TileHeight);
-
-        Adventurer.transform.position = new Vector3(positionX, 1.0f, positionZ);
-        Adventurer.transform.rotation = direction;
-        Camera.transform.position = new Vector3(positionX, 11.0f, positionZ);
+        Adventurer.KeyFound = false;
+        CreateDungeonFloor();
     }
 }

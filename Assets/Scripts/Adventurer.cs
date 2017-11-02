@@ -4,38 +4,37 @@ using UnityEngine;
 
 public class Adventurer : MonoBehaviour
 {
-    public DungeonSpawner DungeonSpawner;
-    public int Stamina = 500;
-    public bool KeyFound = false;
+    public LevelGenerator LevelGenerator;
+    public int Stamina;
+    public bool KeyFound;
     
     public void HandleMovementInput()
     {
-        if (Input.GetKeyUp(KeyCode.W) && DungeonSpawner.GridLocationValidNorth(DungeonSpawner.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.W) && LevelGenerator.GridLocationValidNorth(LevelGenerator.AdventurerLocation))
         {
-            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x, DungeonSpawner.AdventurerLocation.z + 1), Quaternion.Euler(0, 0, 0));
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x, LevelGenerator.AdventurerLocation.z + 1), Quaternion.Euler(0, 0, 0));
             Stamina--;
         }
-        else if (Input.GetKeyUp(KeyCode.D) && DungeonSpawner.GridLocationValidEast(DungeonSpawner.AdventurerLocation))
+        else if (Input.GetKeyUp(KeyCode.D) && LevelGenerator.GridLocationValidEast(LevelGenerator.AdventurerLocation))
         {
-            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x + 1, DungeonSpawner.AdventurerLocation.z), Quaternion.Euler(0, 90, 0));
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x + 1, LevelGenerator.AdventurerLocation.z), Quaternion.Euler(0, 90, 0));
             Stamina--;
         }
-        else if (Input.GetKeyUp(KeyCode.S) && DungeonSpawner.GridLocationValidSouth(DungeonSpawner.AdventurerLocation))
+        else if (Input.GetKeyUp(KeyCode.S) && LevelGenerator.GridLocationValidSouth(LevelGenerator.AdventurerLocation))
         {
-            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x, DungeonSpawner.AdventurerLocation.z - 1), Quaternion.Euler(0, 180, 0));
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x, LevelGenerator.AdventurerLocation.z - 1), Quaternion.Euler(0, 180, 0));
             Stamina--;
         }
-        else if (Input.GetKeyUp(KeyCode.A) && DungeonSpawner.GridLocationValidWest(DungeonSpawner.AdventurerLocation))
+        else if (Input.GetKeyUp(KeyCode.A) && LevelGenerator.GridLocationValidWest(LevelGenerator.AdventurerLocation))
         {
-            DungeonSpawner.SetAdventurerLocation(new GridLocation(DungeonSpawner.AdventurerLocation.x - 1, DungeonSpawner.AdventurerLocation.z), Quaternion.Euler(0, 270, 0));
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x - 1, LevelGenerator.AdventurerLocation.z), Quaternion.Euler(0, 270, 0));
             Stamina--;
         }
-
     }
 
     public bool HaveFoundKey()
     {
-        if (DungeonSpawner.AdventurerLocation.x == DungeonSpawner.KeyLocation.x && DungeonSpawner.AdventurerLocation.z == DungeonSpawner.KeyLocation.z)
+        if (LevelGenerator.AdventurerLocation.x == LevelGenerator.KeyLocation.x && LevelGenerator.AdventurerLocation.z == LevelGenerator.KeyLocation.z)
         {
             KeyFound = true;
         }
@@ -44,6 +43,6 @@ public class Adventurer : MonoBehaviour
 
     public bool IsOnStairs()
     {
-        return DungeonSpawner.AdventurerLocation.x == DungeonSpawner.StairsDownLocation.x && DungeonSpawner.AdventurerLocation.z == DungeonSpawner.StairsDownLocation.z;
+        return LevelGenerator.AdventurerLocation.x == LevelGenerator.StairsDownLocation.x && LevelGenerator.AdventurerLocation.z == LevelGenerator.StairsDownLocation.z;
     }
 }

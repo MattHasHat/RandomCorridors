@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuScreen : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
-    public ScreenManager ScreenManager;
-    public DungeonSpawner DungeonSpawner;
+    public ScreenChanger ScreenChanger;
+    public LevelGenerator LevelGenerator;
     public Texture2D Background;
 
     void OnGUI()
     {
-        if (ScreenManager.GetScreen() != ScreenState.MainMenuScreen)
+        if (ScreenChanger.GetScreen() != ScreenState.MainMenu)
         {
             return;
         }
@@ -19,8 +19,8 @@ public class MainMenuScreen : MonoBehaviour
 
         if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 70, 150, 40), "Start"))
         {
-            DungeonSpawner.StartGame();
-            ScreenManager.SetScreen(ScreenState.DungeonScreen);
+            LevelGenerator.StartGame();
+            ScreenChanger.SetScreen(ScreenState.DungeonView);
         }
 
         if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 120, 150, 40), "Quit"))

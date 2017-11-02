@@ -12,4 +12,22 @@ public class GridLocation
         x = locationX;
         z = locationZ;
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is GridLocation)
+        {
+            GridLocation t = (GridLocation)obj;
+            if (t.x == x && t.z == z)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }

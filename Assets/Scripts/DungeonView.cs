@@ -2,34 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonScreen : MonoBehaviour
+public class DungeonView : MonoBehaviour
 {
-    public ScreenManager ScreenManager;
-    public DungeonSpawner DungeonSpawner;
+    public ScreenChanger ScreenChanger;
+    public LevelGenerator LevelGenerator;
     public Adventurer Adventurer;
 
     void Update()
     {
         if (Adventurer.KeyFound == true)
         {
-            for (int i = 0; i < DungeonSpawner.KeyParent.childCount; i++)
+            for (int i = 0; i < LevelGenerator.KeyParent.childCount; i++)
             {
-                Destroy(DungeonSpawner.KeyParent.GetChild(i).gameObject);
+                Destroy(LevelGenerator.KeyParent.GetChild(i).gameObject);
             }
         }
 
-        if (ScreenManager.GetScreen() != ScreenState.DungeonScreen)
+        if (ScreenChanger.GetScreen() != ScreenState.DungeonView)
         {
             return;
         }
 
         if (Input.GetKeyUp(KeyCode.P))
         {
-            ScreenManager.SetScreen(ScreenState.PauseScreen);
+            ScreenChanger.SetScreen(ScreenState.PauseScreen);
         }
         else if (Input.GetKeyUp(KeyCode.Space) && Adventurer.IsOnStairs() && Adventurer.HaveFoundKey())
         {
-            DungeonSpawner.GoToNextFloor();
+            ScreenChanger.SetScreen(ScreenState.Transition);
         }
 
         Adventurer.HaveFoundKey();
@@ -38,12 +38,12 @@ public class DungeonScreen : MonoBehaviour
 
     void OnGUI()
     {
-        if (ScreenManager.GetScreen() != ScreenState.DungeonScreen)
+        if (ScreenChanger.GetScreen() != ScreenState.DungeonView)
         {
             return;
         }
 
-        GUI.Box(new Rect(25, 25, 200, 25), "Dungeon Floor: " + DungeonSpawner.DungeonFloorNumber);
+        GUI.Box(new Rect(25, 25, 200, 25), "Dungeon Level:" + LevelGenerator.DungeonFloorNumber);
         GUI.Box(new Rect(25, 55, 200, 25), "Stamina Remaining: " + Adventurer.Stamina);
         GUI.Label(new Rect(25, 85, 250, 25), "WASD for Movement");
         GUI.Label(new Rect(25, 115, 250, 25), "P to Pause");
