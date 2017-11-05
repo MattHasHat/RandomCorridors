@@ -30,6 +30,7 @@ public class Transition : MonoBehaviour
         }
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
+
         GUI.Label(new Rect(25, 100, 500, 25), "You Have Descended Further into the Depths.");
         GUI.Label(new Rect(25, 130, 200, 25), "Press Enter to Continue.");
     }

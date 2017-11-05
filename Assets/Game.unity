@@ -275,8 +275,8 @@ MonoBehaviour:
   Camera: {fileID: 415672087}
   TileWidth: 5
   TileDepth: 5
-  DungeonWidth: 10
-  DungeonHeight: 10
+  DungeonWidth: 5
+  DungeonHeight: 5
   DungeonFloorNumber: 1
 --- !u!4 &311179879
 Transform:
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f630c1f0ebb88f49aca725ab82aec3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScreenManager: {fileID: 91613942}
+  ScreenChanger: {fileID: 91613942}
   LevelGenerator: {fileID: 311179878}
   Background: {fileID: 2800000, guid: b184b32dceefb5642959791e6a7069ee, type: 3}
 --- !u!4 &790390594
@@ -755,3 +755,89 @@ MonoBehaviour:
   ScreenChanger: {fileID: 91613942}
   LevelGenerator: {fileID: 311179878}
   Background: {fileID: 2800000, guid: 3c6f1446334ced74ab577598079e101d, type: 3}
+--- !u!1 &1980472542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1980472544}
+  - component: {fileID: 1980472543}
+  m_Layer: 0
+  m_Name: Victory Screen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1980472543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1980472542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6903c03d1bb09ee47850227ba4b955fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScreenChanger: {fileID: 91613942}
+  LevelGenerator: {fileID: 311179878}
+  Background: {fileID: 2800000, guid: 0ad919a7c6b34fc4e843c69db1a334f3, type: 3}
+--- !u!4 &1980472544
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1980472542}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2105696102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2105696104}
+  - component: {fileID: 2105696103}
+  m_Layer: 0
+  m_Name: Death Screen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2105696103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2105696102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b85e76d9de4614a9a701a1f251dd68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScreenChanger: {fileID: 91613942}
+  LevelGenerator: {fileID: 311179878}
+  Background: {fileID: 2800000, guid: b6b0afff5e893b84ca1952790c313fb6, type: 3}
+--- !u!4 &2105696104
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2105696102}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -4,21 +4,41 @@ using UnityEngine;
 
 public class GridLocation
 {
-    public int x;
-    public int z;
+    private int X;
+    private int Z;
 
-    public GridLocation(int locationX, int locationZ)
+    public GridLocation(int x, int z)
     {
-        x = locationX;
-        z = locationZ;
+        X = x;
+        Z = z;
+    }
+
+    public int GetX()
+    {
+        return X;
+    }
+
+    public int GetZ()
+    {
+        return Z;
+    }
+
+    public void SetX(int x)
+    {
+        X = x;
+    }
+
+    public void SetZ(int z)
+    {
+        Z = z;
     }
 
     public override bool Equals(object obj)
     {
         if (obj is GridLocation)
         {
-            GridLocation t = (GridLocation)obj;
-            if (t.x == x && t.z == z)
+            GridLocation test = (GridLocation)obj;
+            if (test.X == X && test.Z == Z)
             {
                 return true;
             }

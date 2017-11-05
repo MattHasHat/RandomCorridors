@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public ScreenChanger ScreenChanger;
-    public Adventurer Adventurer;
-    public Tile Tile;
-
     public Transform StairsUp;
     public Transform StairsDown;
     public Transform Key;
@@ -21,7 +17,7 @@ public class LevelGenerator : MonoBehaviour
 
     public int DungeonWidth;
     public int DungeonHeight;
-    public int DungeonFloorNumber;
+    private int FloorNumber;
 
     public GridLocation AdventurerLocation;
     public GridLocation StairsUpLocation;
@@ -29,6 +25,20 @@ public class LevelGenerator : MonoBehaviour
     public GridLocation KeyLocation;
 
     public TileSet[,] TileSetGrid;
+
+    public ScreenChanger ScreenChanger;
+    public Adventurer Adventurer;
+    public Tile Tile;
+
+    public int GetFloorNumber()
+    {
+        return FloorNumber;
+    }
+
+    public void SetFloorNumber(int floorNumber)
+    {
+        FloorNumber = floorNumber;
+    }
 
     void InitializeDungeonTileFromGrid()
     {
@@ -71,9 +81,9 @@ public class LevelGenerator : MonoBehaviour
 
         if (northValid == true)
         {
+            possibleTiles.Remove(TileSet.EastSouth);
             possibleTiles.Remove(TileSet.EastWest);
             possibleTiles.Remove(TileSet.SouthWest);
-            possibleTiles.Remove(TileSet.EastSouth);
             possibleTiles.Remove(TileSet.NoNorth);
         }
 
@@ -115,8 +125,8 @@ public class LevelGenerator : MonoBehaviour
         if (locationX == DungeonWidth - 1 || eastNotValid == true)
         {
             possibleTiles.Remove(TileSet.NorthEast);
-            possibleTiles.Remove(TileSet.EastWest);
             possibleTiles.Remove(TileSet.EastSouth);
+            possibleTiles.Remove(TileSet.EastWest);
             possibleTiles.Remove(TileSet.NoNorth);
             possibleTiles.Remove(TileSet.NoSouth);
             possibleTiles.Remove(TileSet.NoWest);
@@ -157,12 +167,12 @@ public class LevelGenerator : MonoBehaviour
 
     public bool GridLocationValidNorth(GridLocation location)
     {
-        if (location.z == DungeonHeight - 1)
+        if (location.GetZ() == DungeonHeight - 1)
         {
             return false;
         }
 
-        TileSet tile = TileSetGrid[location.x, location.z];
+        TileSet tile = TileSetGrid[location.GetX(), location.GetZ()];
 
         switch (tile)
         {
@@ -182,12 +192,12 @@ public class LevelGenerator : MonoBehaviour
 
     public bool GridLocationValidEast(GridLocation location)
     {
-        if (location.x == DungeonWidth - 1)
+        if (location.GetX() == DungeonWidth - 1)
         {
             return false;
         }
 
-        TileSet tile = TileSetGrid[location.x, location.z];
+        TileSet tile = TileSetGrid[location.GetX(), location.GetZ()];
 
         switch (tile)
         {
@@ -207,12 +217,12 @@ public class LevelGenerator : MonoBehaviour
 
     public bool GridLocationValidSouth(GridLocation location)
     {
-        if (location.z == 0)
+        if (location.GetZ() == 0)
         {
             return false;
         }
 
-        TileSet tile = TileSetGrid[location.x, location.z];
+        TileSet tile = TileSetGrid[location.GetX(), location.GetZ()];
 
         switch (tile)
         {
@@ -232,12 +242,12 @@ public class LevelGenerator : MonoBehaviour
 
     public bool GridLocationValidWest(GridLocation location)
     {
-        if (location.x == 0)
+        if (location.GetX() == 0)
         {
             return false;
         }
 
-        TileSet tile = TileSetGrid[location.x, location.z];
+        TileSet tile = TileSetGrid[location.GetX(), location.GetZ()];
 
         switch (tile)
         {
@@ -266,9 +276,9 @@ public class LevelGenerator : MonoBehaviour
         bool southNotValid = false;
         bool westNotValid = false;
 
-        if (location.z < DungeonHeight - 1 && TileSetGrid[location.x, location.z + 1] != TileSet.Empty)
+        if (location.GetZ() < DungeonHeight - 1 && TileSetGrid[location.GetX(), location.GetZ() + 1] != TileSet.Empty)
         {
-            if (GridLocationValidSouth(new GridLocation(location.x, location.z + 1)))
+            if (GridLocationValidSouth(new GridLocation(location.GetX(), location.GetZ() + 1)))
             {
                 northValid = true;
             }
@@ -277,10 +287,10 @@ public class LevelGenerator : MonoBehaviour
                 northNotValid = true;
             }
         }
-        
-        if (location.x < DungeonWidth - 1 && TileSetGrid[location.x + 1, location.z] != TileSet.Empty)
+
+        if (location.GetX() < DungeonWidth - 1 && TileSetGrid[location.GetX() + 1, location.GetZ()] != TileSet.Empty)
         {
-            if (GridLocationValidWest(new GridLocation(location.x + 1, location.z)))
+            if (GridLocationValidWest(new GridLocation(location.GetX() + 1, location.GetZ())))
             {
                 eastValid = true;
             }
@@ -290,9 +300,9 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        if (location.z > 0 && TileSetGrid[location.x, location.z - 1] != TileSet.Empty)
+        if (location.GetZ() > 0 && TileSetGrid[location.GetX(), location.GetZ() - 1] != TileSet.Empty)
         {
-            if (GridLocationValidNorth(new GridLocation(location.x, location.z - 1)))
+            if (GridLocationValidNorth(new GridLocation(location.GetX(), location.GetZ() - 1)))
             {
                 southValid = true;
             }
@@ -302,9 +312,9 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        if (location.x > 0 && TileSetGrid[location.x - 1, location.z] != TileSet.Empty)
+        if (location.GetX() > 0 && TileSetGrid[location.GetX() - 1, location.GetZ()] != TileSet.Empty)
         {
-            if (GridLocationValidEast(new GridLocation(location.x - 1, location.z)))
+            if (GridLocationValidEast(new GridLocation(location.GetX() - 1, location.GetZ())))
             {
                 westValid = true;
             }
@@ -314,7 +324,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        return GetPossibleTile(location.x, location.z, northValid, eastValid, southValid, westValid, northNotValid, eastNotValid, southNotValid, westNotValid, false);
+        return GetPossibleTile(location.GetX(), location.GetZ(), northValid, eastValid, southValid, westValid, northNotValid, eastNotValid, southNotValid, westNotValid, false);
     }
 
     void FillRemainingGrid()
@@ -357,7 +367,7 @@ public class LevelGenerator : MonoBehaviour
                 searchedList.Add(toSearch);
             }
 
-            if ((toSearch.x == endLocationX && toSearch.z == endLocationZ) || knownExistingConnections.Contains(toSearch))
+            if ((toSearch.GetX() == endLocationX && toSearch.GetZ() == endLocationZ) || knownExistingConnections.Contains(toSearch))
             {
                 searchCompleted = true;
                 pathFound = true;
@@ -376,9 +386,9 @@ public class LevelGenerator : MonoBehaviour
             }
             else
             {
-                if (GridLocationValidEast(new GridLocation(toSearch.x, toSearch.z)))
+                if (GridLocationValidEast(new GridLocation(toSearch.GetX(), toSearch.GetZ())))
                 {
-                    GridLocation newLocation = new GridLocation(toSearch.x + 1, toSearch.z);
+                    GridLocation newLocation = new GridLocation(toSearch.GetX() + 1, toSearch.GetZ());
 
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
@@ -387,9 +397,9 @@ public class LevelGenerator : MonoBehaviour
 
                 }
 
-                if (GridLocationValidWest(new GridLocation(toSearch.x, toSearch.z)))
+                if (GridLocationValidWest(new GridLocation(toSearch.GetX(), toSearch.GetZ())))
                 {
-                    GridLocation newLocation = new GridLocation(toSearch.x - 1, toSearch.z);
+                    GridLocation newLocation = new GridLocation(toSearch.GetX() - 1, toSearch.GetZ());
 
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
@@ -397,9 +407,9 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
 
-                if (GridLocationValidNorth(new GridLocation(toSearch.x, toSearch.z)))
+                if (GridLocationValidNorth(new GridLocation(toSearch.GetX(), toSearch.GetZ())))
                 {
-                    GridLocation newLocation = new GridLocation(toSearch.x, toSearch.z + 1);
+                    GridLocation newLocation = new GridLocation(toSearch.GetX(), toSearch.GetZ() + 1);
 
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
@@ -407,9 +417,9 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
 
-                if (GridLocationValidSouth(new GridLocation(toSearch.x, toSearch.z)))
+                if (GridLocationValidSouth(new GridLocation(toSearch.GetX(), toSearch.GetZ())))
                 {
-                    GridLocation newLocation = new GridLocation(toSearch.x, toSearch.z - 1);
+                    GridLocation newLocation = new GridLocation(toSearch.GetX(), toSearch.GetZ() - 1);
 
                     if (toSearchList.Contains(newLocation) == false && searchedList.Contains(newLocation) == false)
                     {
@@ -509,24 +519,24 @@ public class LevelGenerator : MonoBehaviour
         TileWidth = Tile.Cross.localScale.x;
         TileDepth = Tile.Cross.localScale.z;
 
-        int stairsUpGridX = chosenUp.x;
-        int stairsUpGridZ = chosenUp.z;
+        int stairsUpGridX = chosenUp.GetX();
+        int stairsUpGridZ = chosenUp.GetZ();
 
         float stairsUpLocationX = transform.position.x + (stairsUpGridX * TileWidth);
         float stairsUpLocationZ = transform.position.z + (stairsUpGridZ * TileDepth);
 
         Transform createStairsUp = (Transform)Instantiate(StairsUp, new Vector3(stairsUpLocationX, 0.75f, stairsUpLocationZ), Quaternion.identity);
 
-        int stairsDownGridX = chosenDown.x;
-        int stairsDownGridZ = chosenDown.z;
+        int stairsDownGridX = chosenDown.GetX();
+        int stairsDownGridZ = chosenDown.GetZ();
 
         float stairsDownLocationX = transform.position.x + (stairsDownGridX * TileWidth);
         float stairsDownLocationZ = transform.position.z + (stairsDownGridZ * TileDepth);
 
         Transform createStairsDown = (Transform)Instantiate(StairsDown, new Vector3(stairsDownLocationX, 0.6f, stairsDownLocationZ), Quaternion.identity);
 
-        int keyGridX = chosenKey.x;
-        int keyGridZ = chosenKey.z;
+        int keyGridX = chosenKey.GetX();
+        int keyGridZ = chosenKey.GetZ();
 
         float keyLocationX = transform.position.x + (keyGridX * TileWidth);
         float keyLocationZ = transform.position.z + (keyGridZ * TileDepth);
@@ -567,8 +577,8 @@ public class LevelGenerator : MonoBehaviour
         TileWidth = Tile.Cross.localScale.x;
         TileDepth = Tile.Cross.localScale.z;
 
-        float positionX = transform.position.x + (location.x * TileWidth);
-        float positionZ = transform.position.z + (location.z * TileDepth);
+        float positionX = transform.position.x + (location.GetX() * TileWidth);
+        float positionZ = transform.position.z + (location.GetZ() * TileDepth);
 
         Adventurer.transform.position = new Vector3(positionX, 1.0f, positionZ);
         Adventurer.transform.rotation = direction;
@@ -580,10 +590,10 @@ public class LevelGenerator : MonoBehaviour
         FillDungeonTileGrid();
         PlaceObjects();
         InitializeDungeonTileFromGrid();
-        SetAdventurerLocation(new GridLocation(StairsUpLocation.x, StairsUpLocation.z), Quaternion.identity);
-        Adventurer.KeyFound = false;
+        SetAdventurerLocation(new GridLocation(StairsUpLocation.GetX(), StairsUpLocation.GetZ()), Quaternion.identity);
+        Adventurer.SetKeyFound(false);
     }
-    
+
     public void DeleteDungeonFloor()
     {
         for (int i = 0; i < TileParent.childCount; i++)
@@ -606,16 +616,14 @@ public class LevelGenerator : MonoBehaviour
     {
         DeleteDungeonFloor();
         CreateDungeonFloor();
-        DungeonFloorNumber++;
-        Adventurer.KeyFound = false;
+        SetFloorNumber(GetFloorNumber() + 1);
     }
 
     public void StartGame()
     {
         TileSetGrid = new TileSet[DungeonWidth, DungeonHeight];
-        DungeonFloorNumber = 1;
-        Adventurer.Stamina = 500;
-        Adventurer.KeyFound = false;
+        SetFloorNumber(1);
+        Adventurer.SetStamina(300);
         CreateDungeonFloor();
     }
 }

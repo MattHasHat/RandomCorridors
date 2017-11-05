@@ -10,14 +10,6 @@ public class DungeonView : MonoBehaviour
 
     void Update()
     {
-        if (Adventurer.KeyFound == true)
-        {
-            for (int i = 0; i < LevelGenerator.KeyParent.childCount; i++)
-            {
-                Destroy(LevelGenerator.KeyParent.GetChild(i).gameObject);
-            }
-        }
-
         if (ScreenChanger.GetScreen() != ScreenState.DungeonView)
         {
             return;
@@ -27,13 +19,21 @@ public class DungeonView : MonoBehaviour
         {
             ScreenChanger.SetScreen(ScreenState.PauseScreen);
         }
-        else if (Input.GetKeyUp(KeyCode.Space) && Adventurer.IsOnStairs() && Adventurer.HaveFoundKey())
+        else if (Input.GetKeyUp(KeyCode.Space) && Adventurer.IsOnStairs() && Adventurer.GetKeyFound() && LevelGenerator.GetFloorNumber() < 5)
         {
             ScreenChanger.SetScreen(ScreenState.Transition);
         }
+        else if (Adventurer.GetStamina() == 0)
+        {
+            ScreenChanger.SetScreen(ScreenState.DeathScreen);
+        }
+        else if (Input.GetKeyUp(KeyCode.Space) && Adventurer.IsOnStairs() && Adventurer.GetKeyFound() && LevelGenerator.GetFloorNumber() == 5)
+        {
+            ScreenChanger.SetScreen(ScreenState.VictoryScreen);
+        }
 
         Adventurer.HaveFoundKey();
-        Adventurer.HandleMovementInput();
+        Adventurer.MoveAdventurer();
     }
 
     void OnGUI()
@@ -43,8 +43,8 @@ public class DungeonView : MonoBehaviour
             return;
         }
 
-        GUI.Box(new Rect(25, 25, 200, 25), "Dungeon Level:" + LevelGenerator.DungeonFloorNumber);
-        GUI.Box(new Rect(25, 55, 200, 25), "Stamina Remaining: " + Adventurer.Stamina);
+        GUI.Box(new Rect(25, 25, 200, 25), "Dungeon Level: " + LevelGenerator.GetFloorNumber());
+        GUI.Box(new Rect(25, 55, 200, 25), "Stamina Remaining: " + Adventurer.GetStamina());
         GUI.Label(new Rect(25, 85, 250, 25), "WASD for Movement");
         GUI.Label(new Rect(25, 115, 250, 25), "P to Pause");
 

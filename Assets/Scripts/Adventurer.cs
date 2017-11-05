@@ -4,45 +4,91 @@ using UnityEngine;
 
 public class Adventurer : MonoBehaviour
 {
+    private int Stamina;
+    private bool KeyFound;
+
     public LevelGenerator LevelGenerator;
-    public int Stamina;
-    public bool KeyFound;
-    
-    public void HandleMovementInput()
+
+    public int GetStamina()
+    {
+        return Stamina;
+    }
+
+    public bool GetKeyFound()
+    {
+        return KeyFound;
+    }
+
+    public void SetStamina(int stamina)
+    {
+        Stamina = stamina;
+    }
+
+    public void SetKeyFound(bool keyFound)
+    {
+        KeyFound = keyFound;
+    }
+
+    public void MoveNorth()
     {
         if (Input.GetKeyUp(KeyCode.W) && LevelGenerator.GridLocationValidNorth(LevelGenerator.AdventurerLocation))
         {
-            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x, LevelGenerator.AdventurerLocation.z + 1), Quaternion.Euler(0, 0, 0));
-            Stamina--;
-        }
-        else if (Input.GetKeyUp(KeyCode.D) && LevelGenerator.GridLocationValidEast(LevelGenerator.AdventurerLocation))
-        {
-            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x + 1, LevelGenerator.AdventurerLocation.z), Quaternion.Euler(0, 90, 0));
-            Stamina--;
-        }
-        else if (Input.GetKeyUp(KeyCode.S) && LevelGenerator.GridLocationValidSouth(LevelGenerator.AdventurerLocation))
-        {
-            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x, LevelGenerator.AdventurerLocation.z - 1), Quaternion.Euler(0, 180, 0));
-            Stamina--;
-        }
-        else if (Input.GetKeyUp(KeyCode.A) && LevelGenerator.GridLocationValidWest(LevelGenerator.AdventurerLocation))
-        {
-            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.x - 1, LevelGenerator.AdventurerLocation.z), Quaternion.Euler(0, 270, 0));
-            Stamina--;
+
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() + 1), Quaternion.Euler(0, 0, 0));
+            SetStamina(GetStamina() - 1);
         }
     }
 
-    public bool HaveFoundKey()
+    public void MoveEast()
     {
-        if (LevelGenerator.AdventurerLocation.x == LevelGenerator.KeyLocation.x && LevelGenerator.AdventurerLocation.z == LevelGenerator.KeyLocation.z)
+        if (Input.GetKeyUp(KeyCode.D) && LevelGenerator.GridLocationValidEast(LevelGenerator.AdventurerLocation))
         {
-            KeyFound = true;
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() + 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 90, 0));
+            SetStamina(GetStamina() - 1);
         }
-        return KeyFound;
+    }
+
+    public void MoveSouth()
+    {
+        if (Input.GetKeyUp(KeyCode.S) && LevelGenerator.GridLocationValidSouth(LevelGenerator.AdventurerLocation))
+        {
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() - 1), Quaternion.Euler(0, 180, 0));
+            SetStamina(GetStamina() - 1);
+        }
+    }
+
+    public void MoveWest()
+    {
+        if (Input.GetKeyUp(KeyCode.A) && LevelGenerator.GridLocationValidWest(LevelGenerator.AdventurerLocation))
+        {
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() - 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 270, 0));
+            SetStamina(GetStamina() - 1);
+        }
+    }
+
+    public void MoveAdventurer()
+    {
+        MoveNorth();
+        MoveEast();
+        MoveSouth();
+        MoveWest();
+    }
+
+    public void HaveFoundKey()
+    {
+        if (LevelGenerator.AdventurerLocation.GetX() == LevelGenerator.KeyLocation.GetX() && LevelGenerator.AdventurerLocation.GetZ() == LevelGenerator.KeyLocation.GetZ())
+        {
+            SetKeyFound(true);
+
+            for (int i = 0; i < LevelGenerator.KeyParent.childCount; i++)
+            {
+                Destroy(LevelGenerator.KeyParent.GetChild(i).gameObject);
+            }
+        }
     }
 
     public bool IsOnStairs()
     {
-        return LevelGenerator.AdventurerLocation.x == LevelGenerator.StairsDownLocation.x && LevelGenerator.AdventurerLocation.z == LevelGenerator.StairsDownLocation.z;
+        return LevelGenerator.AdventurerLocation.GetX() == LevelGenerator.StairsDownLocation.GetX() && LevelGenerator.AdventurerLocation.GetZ() == LevelGenerator.StairsDownLocation.GetZ();
     }
 }
