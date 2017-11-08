@@ -17,15 +17,15 @@ public class PauseScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 50, 150, 40), "Continue the Adventure"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 165, Screen.height / 2 - 10, 150, 40), "Continue the Adventure"))
         {
-            ScreenChanger.SetScreen(ScreenState.DungeonView);
+            ScreenChanger.SetScreen(ScreenState.DungeonScreen);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2, 150, 40), "Back to Main Menu"))
+        if (GUI.Button(new Rect(Screen.width / 2 + 15, Screen.height / 2 - 10, 150, 40), "Back to Main Menu"))
         {
-            LevelGenerator.DeleteDungeonFloor();
-            ScreenChanger.SetScreen(ScreenState.MainMenu);
+            LevelGenerator.DeleteLevel();
+            ScreenChanger.SetScreen(ScreenState.MainMenuScreen);
         }
     }
 }

@@ -63,15 +63,4 @@ public class Tile : MonoBehaviour
                 return Empty;
         }
     }
-
-    public ArrayList GetListOfAllTiles()
-    {
-        ArrayList returnList = new ArrayList();
-
-        foreach (TileSet value in TileSet.GetValues(typeof(TileSet)))
-        {
-            returnList.Add(value);
-        }
-        return returnList;
-    }
 }

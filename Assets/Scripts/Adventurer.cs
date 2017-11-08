@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Adventurer : MonoBehaviour
 {
-    private int Stamina;
+    private int Light;
     private bool KeyFound;
 
     public LevelGenerator LevelGenerator;
 
-    public int GetStamina()
+    public int GetLight()
     {
-        return Stamina;
+        return Light;
     }
 
     public bool GetKeyFound()
@@ -19,9 +19,9 @@ public class Adventurer : MonoBehaviour
         return KeyFound;
     }
 
-    public void SetStamina(int stamina)
+    public void SetLight(int light)
     {
-        Stamina = stamina;
+        Light = light;
     }
 
     public void SetKeyFound(bool keyFound)
@@ -29,40 +29,39 @@ public class Adventurer : MonoBehaviour
         KeyFound = keyFound;
     }
 
-    public void MoveNorth()
+    void MoveNorth()
     {
-        if (Input.GetKeyUp(KeyCode.W) && LevelGenerator.GridLocationValidNorth(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.W) && LevelGenerator.GetIfNorthValid(LevelGenerator.AdventurerLocation))
         {
-
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() + 1), Quaternion.Euler(0, 0, 0));
-            SetStamina(GetStamina() - 1);
+            SetLight(GetLight() - 1);
         }
     }
 
-    public void MoveEast()
+    void MoveEast()
     {
-        if (Input.GetKeyUp(KeyCode.D) && LevelGenerator.GridLocationValidEast(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.D) && LevelGenerator.GetIfEastValid(LevelGenerator.AdventurerLocation))
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() + 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 90, 0));
-            SetStamina(GetStamina() - 1);
+            SetLight(GetLight() - 1);
         }
     }
 
-    public void MoveSouth()
+    void MoveSouth()
     {
-        if (Input.GetKeyUp(KeyCode.S) && LevelGenerator.GridLocationValidSouth(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.S) && LevelGenerator.GetIfSouthValid(LevelGenerator.AdventurerLocation))
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() - 1), Quaternion.Euler(0, 180, 0));
-            SetStamina(GetStamina() - 1);
+            SetLight(GetLight() - 1);
         }
     }
 
-    public void MoveWest()
+    void MoveWest()
     {
-        if (Input.GetKeyUp(KeyCode.A) && LevelGenerator.GridLocationValidWest(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.A) && LevelGenerator.GetIfWestValid(LevelGenerator.AdventurerLocation))
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() - 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 270, 0));
-            SetStamina(GetStamina() - 1);
+            SetLight(GetLight() - 1);
         }
     }
 
@@ -72,6 +71,20 @@ public class Adventurer : MonoBehaviour
         MoveEast();
         MoveSouth();
         MoveWest();
+    }
+
+    public void HaveFoundOilCan()
+    {
+        if (LevelGenerator.AdventurerLocation.GetX() == LevelGenerator.OilCanLocation.GetX() && LevelGenerator.AdventurerLocation.GetZ() == LevelGenerator.OilCanLocation.GetZ())
+        {
+            SetLight(GetLight() + 30);
+            LevelGenerator.OilCanLocation.SetX(LevelGenerator.GetDungeonSize() + 1);
+
+            for (int i = 0; i < LevelGenerator.OilCanParent.childCount; i++)
+            {
+                Destroy(LevelGenerator.OilCanParent.GetChild(i).gameObject);
+            }
+        }
     }
 
     public void HaveFoundKey()

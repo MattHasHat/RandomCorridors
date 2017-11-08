@@ -110,6 +110,34 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &60015028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 60015029}
+  m_Layer: 0
+  m_Name: Spectre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &60015029
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 60015028}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63635562
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +148,7 @@ GameObject:
   - component: {fileID: 63635564}
   - component: {fileID: 63635563}
   m_Layer: 0
-  m_Name: Dungeon View
+  m_Name: Dungeon Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +179,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &91613941
 GameObject:
@@ -203,7 +231,7 @@ GameObject:
   - component: {fileID: 167746428}
   - component: {fileID: 167746427}
   m_Layer: 0
-  m_Name: Main Menu
+  m_Name: Main Menu Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +262,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311179877
 GameObject:
@@ -263,21 +291,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ed64ac3d9dfa4881733defd60d9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScreenChanger: {fileID: 91613942}
-  Adventurer: {fileID: 1255898718}
-  Tile: {fileID: 1623361392}
   StairsUp: {fileID: 4158982403990714, guid: 901c6d27c5b07294e81db9a82603c9c5, type: 2}
   StairsDown: {fileID: 4145573708592860, guid: 64d2cd51d4c63264994a20056cbc136a, type: 2}
   Key: {fileID: 4368694971510498, guid: 7b9aa504b0c38254c8d0969756d9c19b, type: 2}
+  OilCan: {fileID: 4530685969953572, guid: 2d40d1a63364bd84cb20a54c46ffffba, type: 2}
   TileParent: {fileID: 706084389}
   StairsParent: {fileID: 612365080}
   KeyParent: {fileID: 1719029646}
+  OilCanParent: {fileID: 1756762019}
   Camera: {fileID: 415672087}
-  TileWidth: 5
-  TileDepth: 5
-  DungeonWidth: 5
-  DungeonHeight: 5
-  DungeonFloorNumber: 1
+  ScreenChanger: {fileID: 91613942}
+  Adventurer: {fileID: 1255898718}
+  Tile: {fileID: 1623361392}
 --- !u!4 &311179879
 Transform:
   m_ObjectHideFlags: 0
@@ -291,6 +316,7 @@ Transform:
   - {fileID: 706084389}
   - {fileID: 612365080}
   - {fileID: 1719029646}
+  - {fileID: 1756762019}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -513,6 +539,49 @@ Transform:
   m_Father: {fileID: 311179879}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &765270423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 765270424}
+  - component: {fileID: 765270425}
+  m_Layer: 0
+  m_Name: Instructions Screen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &765270424
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 765270423}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &765270425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 765270423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40cbd600282ad8a4fa62b1f333201d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScreenChanger: {fileID: 91613942}
+  LevelGenerator: {fileID: 311179878}
+  Background: {fileID: 2800000, guid: bc63aaece95afa94980abc081c7181b2, type: 3}
 --- !u!1 &790390592
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +618,49 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 790390592}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1154374190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1154374192}
+  - component: {fileID: 1154374191}
+  m_Layer: 0
+  m_Name: Options Screen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1154374191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1154374190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab61da3b96f8ba4cb0e4b7bc3a40f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScreenChanger: {fileID: 91613942}
+  LevelGenerator: {fileID: 311179878}
+  Background: {fileID: 2800000, guid: bc63aaece95afa94980abc081c7181b2, type: 3}
+--- !u!4 &1154374192
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1154374190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -602,29 +714,14 @@ Prefab:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
-      propertyPath: ScreenManager
-      value: 
-      objectReference: {fileID: 91613942}
-    - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
-      propertyPath: DungeonSpawner
-      value: 
-      objectReference: {fileID: 311179878}
-    - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
       propertyPath: LevelGenerator
       value: 
       objectReference: {fileID: 311179878}
-    - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
-      propertyPath: KeyFound
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
-      propertyPath: Stamina
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
-      propertyPath: Tile
+    - target: {fileID: 23133144682939320, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1623361392}
+      objectReference: {fileID: 2100000, guid: 269ae29a7bb44ba49bac0ca0e56bf5ae, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff0b4771b2d7dbe44b0bbbf52e7bab6e, type: 2}
   m_IsPrefabParent: 0
@@ -682,7 +779,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1719029645
 GameObject:
@@ -712,6 +809,34 @@ Transform:
   m_Father: {fileID: 311179879}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1756762018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1756762019}
+  m_Layer: 0
+  m_Name: Oil Can Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1756762019
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1756762018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 311179879}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1881053238
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,7 +847,7 @@ GameObject:
   - component: {fileID: 1881053239}
   - component: {fileID: 1881053240}
   m_Layer: 0
-  m_Name: Transition
+  m_Name: Transition Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -739,7 +864,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1881053240
 MonoBehaviour:
@@ -796,7 +921,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2105696102
 GameObject:
@@ -839,5 +964,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
