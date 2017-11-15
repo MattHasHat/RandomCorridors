@@ -326,7 +326,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.7529412, g: 0.25205448, b: 0.25205448, a: 0.627451}
   m_Intensity: 5
-  m_Range: 20
+  m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -410,7 +410,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 799746575
+  randomSeed: -99028589
   InitialModule:
     serializedVersion: 3
     enabled: 1

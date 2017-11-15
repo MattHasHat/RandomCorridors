@@ -17,22 +17,19 @@ public class InstructionsScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        GUI.Label(new Rect(Screen.width / 2 - 350, Screen.height / 2 + 10, 350, 100),
-            " Use W, A, S, and D to Move" +
-            "\r\n Press P to Pause the Game" +
-            "\r\n Press Spacebar to Go to the Next Floor" +
-            "\r\n Press Enter Between Floors to Continue");
+        GUI.Label(new Rect(Screen.width / 2 - 360, Screen.height / 3 * 2 - 90, 350, 30), "- Use 'W', 'A', 'S', And 'D' To Move");
+        GUI.Label(new Rect(Screen.width / 2 - 360, Screen.height / 3 * 2 - 45, 350, 30), "- Press 'P' To Pause The Game");
+        GUI.Label(new Rect(Screen.width / 2 - 360, Screen.height / 3 * 2, 350, 30), "- Press 'Spacebar' To Go To The Next Floor");
+        GUI.Label(new Rect(Screen.width / 2 - 360, Screen.height / 3 * 2 + 45, 350, 30), "- Press 'Enter' Between Floors To Continue");
 
-        GUI.Label(new Rect(Screen.width / 2, Screen.height / 2 + 10, 350, 100),
-            " Find the Key to Go to the Next Floor" +
-            "\r\n Use the Key on the Door to Advance through the Dungeon" +
-            "\r\n Collect Oil Cans to Extend Your Torch's Light" +
-            "\r\n Avoid the Roaming Spectres or Face Certain Doom");
+        GUI.Label(new Rect(Screen.width / 2 + 60, Screen.height / 3 * 2 - 90, 400, 30), "- Find The Key To Go To The Next Floor");
+        GUI.Label(new Rect(Screen.width / 2 + 60, Screen.height / 3 * 2 - 45, 400, 30), "- Use The Key On The Door To Advance Through The Dungeon");
+        GUI.Label(new Rect(Screen.width / 2 + 60, Screen.height / 3 * 2, 400, 30), "- Collect Oil Cans To Extend Your Torch's Life");
+        GUI.Label(new Rect(Screen.width / 2 + 60, Screen.height / 3 * 2 + 45, 400, 30), "- Avoid The Roaming Spectres Or You Will Flee To Level's Start");
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 110, 150, 40), "Back to Main Menu"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2 + 90, 200, 60), "Back To Main Menu"))
         {
             ScreenChanger.SetScreen(ScreenState.MainMenuScreen);
         }
     }
 }
-

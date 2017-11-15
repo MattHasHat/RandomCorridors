@@ -7,6 +7,7 @@ public class DungeonScreen : MonoBehaviour
     public ScreenChanger ScreenChanger;
     public LevelGenerator LevelGenerator;
     public Adventurer Adventurer;
+    public Specter Specter;
 
     void Update()
     {
@@ -38,6 +39,11 @@ public class DungeonScreen : MonoBehaviour
         Adventurer.MoveAdventurer();
         Adventurer.HaveFoundOilCan();
         Adventurer.HaveFoundKey();
+
+        if (Specter.HaveFoundAdventurer() == true)
+        {
+            LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.StairsUpLocation.GetX(), LevelGenerator.StairsUpLocation.GetZ()), Quaternion.identity);
+        }
     }
 
     void OnGUI()
@@ -47,20 +53,20 @@ public class DungeonScreen : MonoBehaviour
             return;
         }
 
-        GUI.Box(new Rect(Screen.width / 2 - 325, 25, 200, 25), "Dungeon Level: " + LevelGenerator.GetFloorNumber());
+        GUI.Box(new Rect(Screen.width / 2 - 360, 25, 200, 25), "Dungeon Level: " + LevelGenerator.GetFloorNumber());
         GUI.Box(new Rect(Screen.width / 2 - 100, 25, 200, 25), "Light Remaining: " + Adventurer.GetLight());
 
         if (Adventurer.IsOnStairs() && Adventurer.GetKeyFound())
         {
-            GUI.Box(new Rect(Screen.width / 2 + 125, 25, 200, 25), "Go to Next Floor");
+            GUI.Box(new Rect(Screen.width / 2 + 160, 30, 200, 25), "Go To Next Floor");
         }
         else if (Adventurer.GetKeyFound())
         {
-            GUI.Box(new Rect(Screen.width / 2 + 125, 25, 200, 25), "You Have the Key");
+            GUI.Box(new Rect(Screen.width / 2 + 160, 30, 200, 25), "You Have The Key");
         }
         else
         {
-            GUI.Box(new Rect(Screen.width / 2 + 125, 25, 200, 25), "Find the Key");
+            GUI.Box(new Rect(Screen.width / 2 + 160, 30, 200, 25), "Find The Key");
         }
     }
 }

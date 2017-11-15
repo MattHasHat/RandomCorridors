@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Adventurer.cs" />
     <Compile Include="Assets\Scripts\DeathScreen.cs" />
+    <Compile Include="Assets\Scripts\Difficulty.cs" />
     <Compile Include="Assets\Scripts\DungeonScreen.cs" />
     <Compile Include="Assets\Scripts\GridLocation.cs" />
     <Compile Include="Assets\Scripts\InstructionsScreen.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets\Scripts\OptionsScreen.cs" />
     <Compile Include="Assets\Scripts\PauseScreen.cs" />
     <Compile Include="Assets\Scripts\ScreenChanger.cs" />
+    <Compile Include="Assets\Scripts\Specter.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\TransitionScreen.cs" />
     <Compile Include="Assets\Scripts\VictoryScreen.cs" />

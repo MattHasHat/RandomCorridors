@@ -4,27 +4,10 @@ using UnityEngine;
 
 public class OptionsScreen : MonoBehaviour
 {
-    private string Difficulty;
-
     public ScreenChanger ScreenChanger;
     public LevelGenerator LevelGenerator;
+    public Difficulty Difficulty;
     public Texture2D Background;
-
-    public string GetDifficulty()
-    {
-        return Difficulty;
-    }
-
-    public void SetDifficulty(string difficulty)
-    {
-        Difficulty = difficulty;
-    }
-
-    void Start()
-    {
-        SetDifficulty("Normal");
-        LevelGenerator.InitializeGame(10, 300);
-    }
 
     void OnGUI()
     {
@@ -35,27 +18,24 @@ public class OptionsScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 10, 200, 25), "Difficulty: " + GetDifficulty());
+        GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 3 * 2 - 45, 200, 30), "Difficulty: " + Difficulty.GetDifficultyLevel());
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 250, Screen.height / 2 + 50, 150, 40), "Easy"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 330, Screen.height / 3 * 2, 200, 60), "Easy"))
         {
-            SetDifficulty("Easy");
-            LevelGenerator.InitializeGame(5, 200);
+            Difficulty.SetDifficultyLevel(DifficultyLevel.Easy);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 50, 150, 40), "Normal"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2, 200, 60), "Normal"))
         {
-            SetDifficulty("Normal");
-            LevelGenerator.InitializeGame(10, 300);
+            Difficulty.SetDifficultyLevel(DifficultyLevel.Normal);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 + 100, Screen.height / 2 + 50, 150, 40), "Hard"))
+        if (GUI.Button(new Rect(Screen.width / 2 + 130, Screen.height / 3 * 2, 200, 60), "Hard"))
         {
-            SetDifficulty("Hard");
-            LevelGenerator.InitializeGame(15, 400);
+            Difficulty.SetDifficultyLevel(DifficultyLevel.Hard);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 110, 150, 40), "Back to Main Menu"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2 + 90, 200, 60), "Back To Main Menu"))
         {
             ScreenChanger.SetScreen(ScreenState.MainMenuScreen);
         }

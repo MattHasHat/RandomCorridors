@@ -17,10 +17,9 @@ public class VictoryScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        GUI.Label(new Rect(Screen.width / 2 - 175, Screen.height / 2 + 50, 350, 40), "You Have Braved the Dungeon and Plundered its Treasures;");
-        GUI.Label(new Rect(Screen.width / 2 - 60, Screen.height / 2 + 75, 120, 40), "But at What Cost?");
+        GUI.Label(new Rect(Screen.width / 2 - 220, Screen.height / 3 * 2 + 45, 440, 30), "I Have Braved The Darkness And Reached The Bottom. But At What Cost?");
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 110, 150, 40), "Back to Main Menu"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2 + 90, 200, 60), "Back To Main Menu"))
         {
             LevelGenerator.DeleteLevel();
             ScreenChanger.SetScreen(ScreenState.MainMenuScreen);

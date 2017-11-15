@@ -17,23 +17,23 @@ public class MainMenuScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 250, Screen.height / 2 + 50, 150, 40), "Start Game"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 330, Screen.height / 3 * 2, 200, 60), "Start Game"))
         {
             LevelGenerator.StartGame();
             ScreenChanger.SetScreen(ScreenState.DungeonScreen);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 50, 150, 40), "Options"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2, 200, 60), "Options"))
         {
             ScreenChanger.SetScreen(ScreenState.OptionsScreen);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 + 100, Screen.height / 2 + 50, 150, 40), "Instructions"))
+        if (GUI.Button(new Rect(Screen.width / 2 + 130, Screen.height / 3 * 2, 200, 60), "Instructions"))
         {
             ScreenChanger.SetScreen(ScreenState.InstructionsScreen);
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 110, 150, 40), "Quit Game"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2 + 90, 200, 60), "Quit Game"))
         {
             Application.Quit();
         }

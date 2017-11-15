@@ -31,7 +31,7 @@ public class Adventurer : MonoBehaviour
 
     void MoveNorth()
     {
-        if (Input.GetKeyUp(KeyCode.W) && LevelGenerator.GetIfNorthValid(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.W) && LevelGenerator.IsNorthValid(LevelGenerator.AdventurerLocation))
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() + 1), Quaternion.Euler(0, 0, 0));
             SetLight(GetLight() - 1);
@@ -40,7 +40,7 @@ public class Adventurer : MonoBehaviour
 
     void MoveEast()
     {
-        if (Input.GetKeyUp(KeyCode.D) && LevelGenerator.GetIfEastValid(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.D) && LevelGenerator.IsEastValid(LevelGenerator.AdventurerLocation))
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() + 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 90, 0));
             SetLight(GetLight() - 1);
@@ -49,7 +49,7 @@ public class Adventurer : MonoBehaviour
 
     void MoveSouth()
     {
-        if (Input.GetKeyUp(KeyCode.S) && LevelGenerator.GetIfSouthValid(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.S) && LevelGenerator.IsSouthValid(LevelGenerator.AdventurerLocation))
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() - 1), Quaternion.Euler(0, 180, 0));
             SetLight(GetLight() - 1);
@@ -58,7 +58,7 @@ public class Adventurer : MonoBehaviour
 
     void MoveWest()
     {
-        if (Input.GetKeyUp(KeyCode.A) && LevelGenerator.GetIfWestValid(LevelGenerator.AdventurerLocation))
+        if (Input.GetKeyUp(KeyCode.A) && LevelGenerator.IsWestValid(LevelGenerator.AdventurerLocation))
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() - 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 270, 0));
             SetLight(GetLight() - 1);

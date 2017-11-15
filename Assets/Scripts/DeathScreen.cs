@@ -17,9 +17,9 @@ public class DeathScreen : MonoBehaviour
 
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Background);
 
-        GUI.Label(new Rect(Screen.width / 2 - 120, Screen.height / 2 + 70, 250, 40), "You Have Lost Yourself to the Darkness");
+        GUI.Label(new Rect(Screen.width / 2 - 170, Screen.height / 3 * 2 + 45, 340, 30), " You Have Lost Yourself In The Darkness, Never To Leave");
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 110, 150, 40), "Back to Main Menu"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2 + 90, 200, 60), "Back To Main Menu"))
         {
             LevelGenerator.DeleteLevel();
             ScreenChanger.SetScreen(ScreenState.MainMenuScreen);
