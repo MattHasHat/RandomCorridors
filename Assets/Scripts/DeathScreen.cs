@@ -8,6 +8,14 @@ public class DeathScreen : MonoBehaviour
     public LevelGenerator LevelGenerator;
     public Texture2D Background;
 
+    private AudioSource AudioSource;
+    public AudioClip Exit;
+
+    void Awake()
+    {
+        AudioSource = GetComponent<AudioSource>();
+    }
+
     void OnGUI()
     {
         if (ScreenChanger.GetScreen() != ScreenState.DeathScreen)
@@ -21,6 +29,8 @@ public class DeathScreen : MonoBehaviour
 
         if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 3 * 2 + 90, 200, 60), "Back To Main Menu"))
         {
+            AudioSource.clip = Exit;
+            AudioSource.Play();
             LevelGenerator.DeleteLevel();
             ScreenChanger.SetScreen(ScreenState.MainMenuScreen);
         }

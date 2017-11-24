@@ -6,10 +6,11 @@ public enum DifficultyLevel { Easy, Normal, Hard }
 
 public class Difficulty : MonoBehaviour
 {
-    private DifficultyLevel CurrentDifficulty;
-
     private int DungeonSize;
     private int Light;
+    private float SpecterSpeed;
+
+    private DifficultyLevel CurrentDifficulty;
 
     public DifficultyLevel GetDifficultyLevel()
     {
@@ -21,10 +22,11 @@ public class Difficulty : MonoBehaviour
         CurrentDifficulty = difficultyLevel;
     }
 
-    public Difficulty(int dungeonSize, int light)
+    public Difficulty(int dungeonSize, int light, float specterSpeed)
     {
         DungeonSize = dungeonSize;
         Light = light;
+        SpecterSpeed = specterSpeed;
     }
 
     public int GetDungeonSize()
@@ -37,6 +39,11 @@ public class Difficulty : MonoBehaviour
         return Light;
     }
 
+    public float GetSpecterSpeed()
+    {
+        return SpecterSpeed;
+    }
+
     public void SetDungeonSize(int dungeonSize)
     {
         DungeonSize = dungeonSize;
@@ -45,6 +52,11 @@ public class Difficulty : MonoBehaviour
     public void SetLight(int light)
     {
         Light = light;
+    }
+
+    public void SetSpecterSpeed(float specterSpeed)
+    {
+        SpecterSpeed = specterSpeed;
     }
 
     void Start()

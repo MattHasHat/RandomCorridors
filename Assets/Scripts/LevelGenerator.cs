@@ -81,6 +81,7 @@ public class LevelGenerator : MonoBehaviour
             case TileSet.NoSouth:
             case TileSet.NoWest:
             case TileSet.Cross:
+            case TileSet.Room:
                 return true;
             default:
                 return false;
@@ -106,6 +107,7 @@ public class LevelGenerator : MonoBehaviour
             case TileSet.NoSouth:
             case TileSet.NoWest:
             case TileSet.Cross:
+            case TileSet.Room:
                 return true;
             default:
                 return false;
@@ -131,6 +133,7 @@ public class LevelGenerator : MonoBehaviour
             case TileSet.NoEast:
             case TileSet.NoWest:
             case TileSet.Cross:
+            case TileSet.Room:
                 return true;
             default:
                 return false;
@@ -156,6 +159,7 @@ public class LevelGenerator : MonoBehaviour
             case TileSet.NoEast:
             case TileSet.NoSouth:
             case TileSet.Cross:
+            case TileSet.Room:
                 return true;
             default:
                 return false;
@@ -184,6 +188,7 @@ public class LevelGenerator : MonoBehaviour
             possibleTiles.Remove(TileSet.NoSouth);
             possibleTiles.Remove(TileSet.NoWest);
             possibleTiles.Remove(TileSet.Cross);
+            possibleTiles.Remove(TileSet.Room);
         }
 
         if (location.GetX() == GetDungeonSize() - 1)
@@ -195,6 +200,7 @@ public class LevelGenerator : MonoBehaviour
             possibleTiles.Remove(TileSet.NoSouth);
             possibleTiles.Remove(TileSet.NoWest);
             possibleTiles.Remove(TileSet.Cross);
+            possibleTiles.Remove(TileSet.Room);
         }
 
         if (location.GetZ() == 0)
@@ -206,6 +212,7 @@ public class LevelGenerator : MonoBehaviour
             possibleTiles.Remove(TileSet.NoEast);
             possibleTiles.Remove(TileSet.NoWest);
             possibleTiles.Remove(TileSet.Cross);
+            possibleTiles.Remove(TileSet.Room);
         }
 
         if (location.GetX() == 0)
@@ -217,6 +224,7 @@ public class LevelGenerator : MonoBehaviour
             possibleTiles.Remove(TileSet.NoEast);
             possibleTiles.Remove(TileSet.NoSouth);
             possibleTiles.Remove(TileSet.Cross);
+            possibleTiles.Remove(TileSet.Room);
         }
 
         return possibleTiles;
@@ -242,6 +250,7 @@ public class LevelGenerator : MonoBehaviour
                 possibleTiles.Remove(TileSet.NoSouth);
                 possibleTiles.Remove(TileSet.NoWest);
                 possibleTiles.Remove(TileSet.Cross);
+                possibleTiles.Remove(TileSet.Room);
             }
         }
         return possibleTiles;
@@ -267,6 +276,7 @@ public class LevelGenerator : MonoBehaviour
                 possibleTiles.Remove(TileSet.NoSouth);
                 possibleTiles.Remove(TileSet.NoWest);
                 possibleTiles.Remove(TileSet.Cross);
+                possibleTiles.Remove(TileSet.Room);
             }
         }
         return possibleTiles;
@@ -292,6 +302,7 @@ public class LevelGenerator : MonoBehaviour
                 possibleTiles.Remove(TileSet.NoEast);
                 possibleTiles.Remove(TileSet.NoWest);
                 possibleTiles.Remove(TileSet.Cross);
+                possibleTiles.Remove(TileSet.Room);
             }
         }
         return possibleTiles;
@@ -317,6 +328,7 @@ public class LevelGenerator : MonoBehaviour
                 possibleTiles.Remove(TileSet.NoEast);
                 possibleTiles.Remove(TileSet.NoSouth);
                 possibleTiles.Remove(TileSet.Cross);
+                possibleTiles.Remove(TileSet.Room);
             }
         }
         return possibleTiles;
@@ -653,7 +665,7 @@ public class LevelGenerator : MonoBehaviour
         Camera.transform.position = new Vector3(positionX, 13.0f, positionZ);
     }
 
-    public void SetSpecterLocation(GridLocation location, Quaternion direction)
+    public void SetSpecterLocation(GridLocation location)
     {
         SpecterLocation = location;
 
@@ -661,7 +673,6 @@ public class LevelGenerator : MonoBehaviour
         float positionZ = transform.position.z + (location.GetZ() * GetTileSize());
 
         Specter.transform.position = new Vector3(positionX, 1.0f, positionZ);
-        Specter.transform.rotation = direction;
     }
 
     void CreateLevel()
@@ -670,9 +681,9 @@ public class LevelGenerator : MonoBehaviour
         PlaceObjects();
         InitializeTiles();
         SetAdventurerLocation(new GridLocation(StairsUpLocation.GetX(), StairsUpLocation.GetZ()), Quaternion.identity);
-        SetSpecterLocation(new GridLocation(OilCanLocation.GetX(), OilCanLocation.GetZ()), Quaternion.identity);
+        SetSpecterLocation(new GridLocation(StairsDownLocation.GetX(), StairsDownLocation.GetZ()));
         Adventurer.SetKeyFound(false);
-        Specter.Wander();
+        Specter.StartWandering();
     }
 
     void DeleteFloor()
@@ -713,6 +724,7 @@ public class LevelGenerator : MonoBehaviour
         DeleteStairs();
         DeleteKey();
         DeleteOilCan();
+        Specter.StopWandering();
     }
 
     public void GoToNextFloor()
@@ -727,16 +739,19 @@ public class LevelGenerator : MonoBehaviour
         switch (difficultyLevel)
         {
             case DifficultyLevel.Easy:
-                Difficulty.SetDungeonSize(5);
+                Difficulty.SetDungeonSize(7);
                 Difficulty.SetLight(200);
+                Difficulty.SetSpecterSpeed(1.65f);
                 break;
             case DifficultyLevel.Normal:
                 Difficulty.SetDungeonSize(10);
-                Difficulty.SetLight(300);
+                Difficulty.SetLight(500);
+                Difficulty.SetSpecterSpeed(1.5f);
                 break;
             case DifficultyLevel.Hard:
-                Difficulty.SetDungeonSize(15);
-                Difficulty.SetLight(400);
+                Difficulty.SetDungeonSize(14);
+                Difficulty.SetLight(800);
+                Difficulty.SetSpecterSpeed(1.35f);
                 break;
             default:
                 return null;
@@ -750,6 +765,7 @@ public class LevelGenerator : MonoBehaviour
         SetFloorNumber(1);
         SetDungeonSize(Difficulty.GetDungeonSize());
         Adventurer.SetLight(Difficulty.GetLight());
+        Specter.SetSpecterSpeed(Difficulty.GetSpecterSpeed());
     }
 
     public void StartGame()

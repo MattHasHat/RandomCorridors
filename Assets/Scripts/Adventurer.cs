@@ -9,6 +9,11 @@ public class Adventurer : MonoBehaviour
 
     public LevelGenerator LevelGenerator;
 
+    private AudioSource AudioSource;
+    public AudioClip Step;
+    public AudioClip PickupOil;
+    public AudioClip PickupKey;
+
     public int GetLight()
     {
         return Light;
@@ -35,6 +40,8 @@ public class Adventurer : MonoBehaviour
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() + 1), Quaternion.Euler(0, 0, 0));
             SetLight(GetLight() - 1);
+            AudioSource.clip = Step;
+            AudioSource.Play();
         }
     }
 
@@ -44,6 +51,8 @@ public class Adventurer : MonoBehaviour
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() + 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 90, 0));
             SetLight(GetLight() - 1);
+            AudioSource.clip = Step;
+            AudioSource.Play();
         }
     }
 
@@ -53,6 +62,8 @@ public class Adventurer : MonoBehaviour
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX(), LevelGenerator.AdventurerLocation.GetZ() - 1), Quaternion.Euler(0, 180, 0));
             SetLight(GetLight() - 1);
+            AudioSource.clip = Step;
+            AudioSource.Play();
         }
     }
 
@@ -62,6 +73,8 @@ public class Adventurer : MonoBehaviour
         {
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.AdventurerLocation.GetX() - 1, LevelGenerator.AdventurerLocation.GetZ()), Quaternion.Euler(0, 270, 0));
             SetLight(GetLight() - 1);
+            AudioSource.clip = Step;
+            AudioSource.Play();
         }
     }
 
@@ -77,7 +90,9 @@ public class Adventurer : MonoBehaviour
     {
         if (LevelGenerator.AdventurerLocation.GetX() == LevelGenerator.OilCanLocation.GetX() && LevelGenerator.AdventurerLocation.GetZ() == LevelGenerator.OilCanLocation.GetZ())
         {
-            SetLight(GetLight() + 30);
+            SetLight(GetLight() + 25);
+            AudioSource.clip = PickupOil;
+            AudioSource.Play();
             LevelGenerator.OilCanLocation.SetX(LevelGenerator.GetDungeonSize() + 1);
 
             for (int i = 0; i < LevelGenerator.OilCanParent.childCount; i++)
@@ -91,6 +106,12 @@ public class Adventurer : MonoBehaviour
     {
         if (LevelGenerator.AdventurerLocation.GetX() == LevelGenerator.KeyLocation.GetX() && LevelGenerator.AdventurerLocation.GetZ() == LevelGenerator.KeyLocation.GetZ())
         {
+            if (!GetKeyFound())
+            {
+                AudioSource.clip = PickupKey;
+                AudioSource.Play();
+            }
+
             SetKeyFound(true);
 
             for (int i = 0; i < LevelGenerator.KeyParent.childCount; i++)
@@ -103,5 +124,10 @@ public class Adventurer : MonoBehaviour
     public bool IsOnStairs()
     {
         return LevelGenerator.AdventurerLocation.GetX() == LevelGenerator.StairsDownLocation.GetX() && LevelGenerator.AdventurerLocation.GetZ() == LevelGenerator.StairsDownLocation.GetZ();
+    }
+
+    void Awake()
+    {
+        AudioSource = GetComponent<AudioSource>();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TileSet { None, Empty, EndNorth, EndEast, EndSouth, EndWest, NorthEast, NorthSouth, NorthWest, EastSouth, EastWest, SouthWest, NoNorth, NoEast, NoSouth, NoWest, Cross }
+public enum TileSet { None, Empty, EndNorth, EndEast, EndSouth, EndWest, NorthEast, NorthSouth, NorthWest, EastSouth, EastWest, SouthWest, NoNorth, NoEast, NoSouth, NoWest, Cross, Room }
 
 public class Tile : MonoBehaviour
 {
@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour
     public Transform NoSouth;
     public Transform NoWest;
     public Transform Cross;
+    public Transform Room;
 
     public Transform GetPrefabFromTileSet(TileSet tile)
     {
@@ -59,6 +60,8 @@ public class Tile : MonoBehaviour
                 return NoWest;
             case TileSet.Cross:
                 return Cross;
+            case TileSet.Room:
+                return Room;
             default:
                 return Empty;
         }

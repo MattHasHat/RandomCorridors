@@ -4,10 +4,29 @@ using UnityEngine;
 
 public class DungeonScreen : MonoBehaviour
 {
+    private bool HasPlayed;
+
     public ScreenChanger ScreenChanger;
     public LevelGenerator LevelGenerator;
     public Adventurer Adventurer;
     public Specter Specter;
+
+    private AudioSource AudioSource;
+    public AudioClip PauseGame;
+    public AudioClip OpenDoor;
+    public AudioClip Died;
+    public AudioClip Fanfare;
+    public AudioClip Scream;
+
+    public bool GetHasPlayed()
+    {
+        return HasPlayed;
+    }
+
+    public void SetHasPlayed(bool hasPlayed)
+    {
+        HasPlayed = hasPlayed;
+    }
 
     void Update()
     {
@@ -16,23 +35,44 @@ public class DungeonScreen : MonoBehaviour
             return;
         }
 
+        if (Input.GetKey(KeyCode.RightAlt))
+        {
+            LevelGenerator.Camera.transform.position = new Vector3(22.5f, 50.0f, 22.5f);
+        }
+
         if (Input.GetKeyUp(KeyCode.P))
         {
+            AudioSource.clip = PauseGame;
+            AudioSource.Play();
             ScreenChanger.SetScreen(ScreenState.PauseScreen);
         }
 
         if (Input.GetKeyUp(KeyCode.Space) && Adventurer.IsOnStairs() && Adventurer.GetKeyFound() && LevelGenerator.GetFloorNumber() < 13)
         {
+            AudioSource.clip = OpenDoor;
+            AudioSource.Play();
             ScreenChanger.SetScreen(ScreenState.TransitionScreen);
         }
 
         if (Adventurer.GetLight() == 0)
         {
+            if (ScreenChanger.GetScreen() == ScreenState.DungeonScreen)
+            {
+                AudioSource.clip = Died;
+                AudioSource.Play();
+            }
+
             ScreenChanger.SetScreen(ScreenState.DeathScreen);
         }
 
         if (Input.GetKeyUp(KeyCode.Space) && Adventurer.IsOnStairs() && Adventurer.GetKeyFound() && LevelGenerator.GetFloorNumber() == 13)
         {
+            if (ScreenChanger.GetScreen() == ScreenState.DungeonScreen)
+            {
+                AudioSource.clip = Fanfare;
+                AudioSource.Play();
+            }
+
             ScreenChanger.SetScreen(ScreenState.VictoryScreen);
         }
 
@@ -42,8 +82,19 @@ public class DungeonScreen : MonoBehaviour
 
         if (Specter.HaveFoundAdventurer() == true)
         {
+            if (!GetHasPlayed())
+            {
+                AudioSource.clip = Scream;
+                AudioSource.Play();
+                SetHasPlayed(true);
+            }
             LevelGenerator.SetAdventurerLocation(new GridLocation(LevelGenerator.StairsUpLocation.GetX(), LevelGenerator.StairsUpLocation.GetZ()), Quaternion.identity);
         }
+    }
+
+    void Awake()
+    {
+        AudioSource = GetComponent<AudioSource>();
     }
 
     void OnGUI()
